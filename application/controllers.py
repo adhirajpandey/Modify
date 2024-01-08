@@ -1,23 +1,47 @@
-from flask import jsonify
-from flask import current_app as app
+from flask import current_app as app, render_template, request, redirect, url_for
 from application.models import User
 from application.database import db
+import application.services as services
 
 
-@app.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    d = {}
-    for user in users:
-        d[user.id] = {'username': user.username, 'email': user.email}
-    return jsonify({'users': d})
+@app.route("/", methods = ["GET"])
+@app.route("/index", methods = ["GET"])
+def index():
+    return render_template("index.html")
 
-@app.route('/add', methods=['GET'])
-def add_users():
-    id = 1
-    username = 'test'
-    email = 'adsad@adsa.ada'
-    user = User(id=id, username=username, email=email)
-    db.session.add(user)
-    db.session.commit()
-    return jsonify({'message': 'Add user'})
+@app.route("/register", methods = ["GET", "POST"])
+def user_register():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if services.input_validation(username, password):
+            user = User(username=username, password=password, type='general')
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('user_login'))
+        else:
+            error_message = "Invalid username or password"
+            return render_template("user_register.html", error=error_message)
+
+    return render_template("user_register.html")
+
+@app.route("/login", methods = ["GET", "POST"])
+def user_login():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if services.input_validation(username, password):
+            user = User.query.filter_by(username=username, password=password).first()
+            if user:
+                return redirect(url_for('index'))
+            else:
+                error_message = "Invalid username or password"
+                return render_template("user_login.html", error=error_message)
+   
+    return render_template("user_login.html")
+
+@app.route("/admin-login", methods = ["GET"])
+def admin_login():
+    return render_template("admin_login.html")

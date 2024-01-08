@@ -1,5 +1,5 @@
 .idea/
 __pycache__/
 venv/
-db_directory/app.db
 appliciton/__pycache__
+notes.txt

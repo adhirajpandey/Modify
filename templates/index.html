@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a href="/admin-login" style="color: white; text-decoration: none">
+          <button class="btn btn-primary">App Admin Login</button>
+        </a>
+      </li>
+    </ul>
+</div>
+
+
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="text-center">
+    <br><br><br>
+    <h1>Welcome to Modify Music Streaming Application</h1>
+    <br><br><br>
+    <a href="/register" style="color: white; text-decoration: none; margin-right: 10px;"><button class="btn btn-primary" style="width: 150px;">Register</button></a>
+    <span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span>
+    <a href="/login" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-primary" style="width: 150px;">Login</button></a>
+</div>
+
+{% endblock content %}
