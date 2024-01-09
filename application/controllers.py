@@ -45,3 +45,7 @@ def user_login():
 @app.route("/admin-login", methods = ["GET"])
 def admin_login():
     return render_template("admin_login.html")
+
+@app.route("/user-home", methods = ["GET"])
+def user_home():
+    return render_template("user_home.html")
