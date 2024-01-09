@@ -49,3 +49,29 @@ def admin_login():
 @app.route("/user-home", methods = ["GET"])
 def user_home():
     return render_template("user_home.html")
+
+@app.route("/song-details", methods = ["GET"])
+def song_details():
+    temp_song_dict = {
+        "song_id": 1,
+        "song_name": "Full Song Name",
+        "song_artist": "Artist Name",
+        "song_album": "album1",
+        "song_genre": "genre1",
+        "song_year": 2021,
+        "song_length": 3.5,
+        "song_rating": 4.5,
+        "song_listens": 100
+    }
+
+    return render_template("song_details.html", song=temp_song_dict)
+
+@app.route("/creator-account", methods = ["GET"])
+def creator_account():
+    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
+    return render_template("creator_register.html")
+
+@app.route("/creator-home", methods = ["GET"])
+def creator_home():
+    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
+    return render_template("creator_home.html")

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height: 50vh;">
+        <div class="col-md-8">
+            <div class="box" style="border: 1px solid black; border-radius: 10px; padding: 20px; width: 800px; margin: 0 auto;">
+                <div class="box-content">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1 class="text-start">{{ song['song_name'] }}</h1>
+                        <div style="text-align: right;">
+                            <a href="/rate/{{ song.id }}" style="color: white; text-decoration: none;"><button class="btn btn-dark">Rate This Track</button></a>
+                        </div>
+                    </div>
+                    <h3>{{ song['song_artist'] }} | {{ song['song_year'] }}</h3>
+                    
+                    <div class="box" style="border: 1px solid black; border-radius: 10px; padding: 20px; margin-top: 20px;">
+                        <div class="box-content">
+                            <h2>Lyrics</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nuncLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc neLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. Sed euismod, tortor eu lacinia tincidunt, mauris mauris aliquet urna, id lacinia nunc nunc nec nunc. Nulla facilisi. Sed non nunc nec nunc. nunc. Nulla facilisi. Sed non nunc nec nunc. nec nunc. Nulla facilisi. Sed non nunc nec nunc.nec nunc. Nulla facilisi. Sed non nunc nec nunc.Sed non nunc nec nunc.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

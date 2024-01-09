@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="row justify-content-center align-items-center" style="height: 70vh;">
+    <div class="box" style="border: 1px solid black; border-radius: 10px; padding: 20px; width: 800px; margin: 0 auto;">
+        <br>
+        <h2 class="text-center">Start with Uploading Songs</h2>
+        <br>
+        <br>
+        <br>
+        <div class="text-center" style="display: flex; justify-content: center; align-items: center;">
+            <a href="#" class="btn btn-success btn-lg rounded-circle" style="font-size: 40px; width: 120px; height: 120px; line-height: 120px; display: flex; justify-content: center; align-items: center;">
+                <span style="display: inline-block; vertical-align: middle;">+</span>
+            </a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+{% endblock content %}
