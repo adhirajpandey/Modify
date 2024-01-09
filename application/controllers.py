@@ -84,8 +84,3 @@ def song_upload():
 @app.route("/creator-dashboard", methods = ["GET"])
 def creator_dashboard():
     return render_template("creator_dashboard.html")
-
-@app.route("/admin-dashboard", methods = ["GET"])
-def admin_dashboard():
-    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
-    return render_template("admin_dashboard.html")
