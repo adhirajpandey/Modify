@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 75px;">
+        <li class="nav-item" style="margin-right: 20px;">
+            <div class="d-flex">
+                <a href="/songs" style="color: white; text-decoration: none"><button class="btn btn-primary btn-block">Songs</button></a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="d-flex">
+                <a href="/albums" style="color: white; text-decoration: none"><button class="btn btn-primary btn-block">Albums</button></a>
+            </div>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between">
+    <div class="box" style="border: 1px solid black; width: 300px; height: 200px; background-color: lightgrey; text-align: center; padding-top: 50px; margin-bottom: 10px; margin-left: 50px; margin-right: 30px; margin-top: 30px;">
+        <h2>Normal Users</h2>
+        <h3><strong>240</strong></h3>
+    </div>
+
+    <div class="box" style="border: 1px solid black; width: 300px; height: 200px; background-color: lightgrey; text-align: center; padding-top: 50px; margin-bottom: 10px; margin-left: 150px; margin-right: 30px; margin-top: 30px;">
+        <h2>Songs</h2>
+        <h3><strong>240</strong></h3>
+    </div>
+
+    <div class="box" style="border: 1px solid black; width: 300px; height: 200px; background-color: lightgrey; text-align: center; padding-top: 50px; margin-bottom: 10px; margin-left: 30px; margin-right: 30px; margin-top: 30px;">
+        <h2>Albums</h2>
+        <h3><strong>85</strong></h3>
+    </div>
+
+    <div class="box" style="border: 1px solid black; width: 300px; height: 200px; background-color: lightgrey; text-align: center; padding-top: 50px; margin-bottom: 10px; margin-left: 30px; margin-right: 50px; margin-top: 30px;">
+        <h2>Genre</h2>
+        <h3><strong>42</strong></h3>
+    </div>
+</div>
+<br>
+
+<div class="d-flex justify-content-between">
+    <div class="box" style="border: 1px solid black; width: 300px; height: 200px; background-color: lightgrey; text-align: center; padding-top: 50px; margin-bottom: 10px; margin-left: 50px; margin-right: 10px; margin-top: 30px;">
+        <h2>Creators</h2>
+        <h3><strong>85</strong></h3>
+    </div>
+
+    <div class="box" style="border: 1px solid black; width: 1090px; height: 350px; background-color: lightgrey; text-align: center; padding-top: 10px; margin-bottom: 10px; margin-left: 30px; margin-right: 50px; margin-top: 30px; vertical-align: top;">
+        <h2>Graphs</h2>
+    </div>
+
+</div> 
+
+{% endblock content %}

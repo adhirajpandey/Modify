@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="box" style="border: 1px solid black; border-radius: 10px; padding: 20px; width: 1600px; margin: 0 auto;">
+    <h1>Dashboard</h1>
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <div class="square-box" style="background-color: rgb(199, 199, 199); width: 430px; height: 300px; border-radius: 20px; text-align: center;">
+            <br>
+            <br>
+            <br>
+            <h1>Total Songs Uploaded</h1>
+            <br>
+            <h2><strong>250</strong></h2>
+        </div>
+        <div class="square-box" style="background-color: rgb(199, 199, 199); width: 430px; height: 300px; border-radius: 20px; text-align: center;">
+            <br>
+            <br>
+            <br>
+            <h1>Average Rating</h1>
+            <br>
+            <h2><strong>250</strong></h2>
+        </div>
+        <div class="square-box" style="background-color: rgb(199, 199, 199); width: 430px; height: 300px; border-radius: 20px; text-align: center;">
+            <br>
+            <br>
+            <br>
+            <h1>Total Album</h1>
+            <br>
+            <h2><strong>250</strong></h2>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="box" style="border: 1px solid black; border-radius: 10px; padding: 20px; width: 1600px; margin: 0 auto;">
+    <h1>Your Uploads</h1>
+    <div class="card" style="margin-left: 25px; margin-right: 25px;">
+        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
+            <h5 class="card-title" style="margin: 0;">Song Name 1</h5>
+            <div>
+                <a href="#" class="btn btn-dark ms-5">View Lyrics</a>
+                <a href="#" class="btn btn-dark ms-5">Edit</a>
+                <a href="#" class="btn btn-danger ms-5">Delete</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card" style="margin-left: 25px; margin-right: 25px;">
+        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
+            <h5 class="card-title" style="margin: 0;">Song Name 2</h5>
+            <div>
+                <a href="#" class="btn btn-dark ms-5">View Lyrics</a>
+                <a href="#" class="btn btn-dark ms-5">Edit</a>
+                <a href="#" class="btn btn-danger ms-5">Delete</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card" style="margin-left: 25px; margin-right: 25px;">
+        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
+            <h5 class="card-title" style="margin: 0;">Song Name 3</h5>
+            <div>
+                <a href="#" class="btn btn-dark ms-5">View Lyrics</a>
+                <a href="#" class="btn btn-dark ms-5">Edit</a>
+                <a href="#" class="btn btn-danger ms-5">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

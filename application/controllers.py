@@ -75,3 +75,17 @@ def creator_account():
 def creator_home():
     # if already creator account, redirect to creator home to directly upload songs else open creator registration page
     return render_template("creator_home.html")
+
+@app.route("/song-upload", methods = ["GET"])
+def song_upload():
+    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
+    return render_template("song_upload.html")
+
+@app.route("/creator-dashboard", methods = ["GET"])
+def creator_dashboard():
+    return render_template("creator_dashboard.html")
+
+@app.route("/admin-dashboard", methods = ["GET"])
+def admin_dashboard():
+    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
+    return render_template("admin_dashboard.html")
