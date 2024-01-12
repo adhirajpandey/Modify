@@ -84,3 +84,15 @@ def song_upload():
 @app.route("/creator-dashboard", methods = ["GET"])
 def creator_dashboard():
     return render_template("creator_dashboard.html")
+
+@app.route("/admin-dashboard", methods = ["GET"])
+def admin_dashboard():
+    return render_template("admin_dashboard.html")
+
+@app.route("/admin-all-tracks", methods = ["GET"])
+def admin_all_tracks():
+    return render_template("admin_all_tracks.html")
+
+@app.route("/admin-all-albums", methods = ["GET"])
+def admin_all_albums():
+    return render_template("admin_all_albums.html")

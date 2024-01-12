@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="row" style="margin: 10px; padding: 10px;">
+    <div class="col-4">
+        <div class="container">
+            <div class="row">
+                <div class="container" style="padding: 20px; margin-top: 10px;">
+                    <h1>Upload Metrics</h1>
+                    <div class="container border border-dark" style="padding: 20px; margin-top: 10px;">
+                        <h2 class="text-center">Tracks</h2>
+                        <br>
+                        <h3 class="text-center"><strong>250</strong></h3>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container" style="padding: 20px; margin-top: 10px;">
+                    <div class="container border border-dark" style="padding: 20px; margin-top: 10px;">
+                        <h2 class="text-center">Tracks</h2>
+                        <br>
+                        <h3 class="text-center"><strong>250</strong></h3>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div class="container">
+            <div class="row">
+                <div class="container" style="padding: 20px; margin-top: 10px;">
+                    <h1>App Performance</h1>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-4">
+                            <div class="container border border-dark">
+                                <h2 class="text-center">Tracks</h2>
+                                <br>
+                                <h3 class="text-center"><strong>250</strong></h3>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="container border border-dark">
+                                <h2 class="text-center">Albums</h2>
+                                <br>
+                                <h3 class="text-center"><strong>250</strong></h3>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="container border border-dark">
+                                <h2 class="text-center">Genres</h2>
+                                <br>
+                                <h3 class="text-center"><strong>250</strong></h3>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container" style="padding: 20px; margin-top: 10px;">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-6">
+                            <div class="container border border-dark">
+                                <h2 class="text-center">Image</h2>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="container border border-dark">
+                                <h2 class="text-center">Image</h2>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>                        
+                    </div>
+                    </div>
+                    <div style="margin-top: 20px;" class="text-center">
+                        <button class="btn btn-dark">View More Analytics</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
