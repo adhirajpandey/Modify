@@ -3,3 +3,4 @@ __pycache__/
 venv/
 appliciton/__pycache__
 notes.txt
+migrations/
