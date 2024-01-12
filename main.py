@@ -1,7 +1,8 @@
 import os
 from flask import Flask
-from application.models import db
+from application.database import db
 from application.config import Config
+from flask_migrate import Migrate
 
 
 def initialize_database(app):
@@ -21,7 +22,7 @@ def create_app():
 
 app = create_app()
 initialize_database(app)
-
+migrate = Migrate(app, db)
 
 from application.controllers import *
 
