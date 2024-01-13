@@ -67,21 +67,13 @@ def user_home():
     else:
         return redirect(url_for('user_login'))
 
-@app.route("/song-details", methods = ["GET"])
-def song_details():
-    temp_song_dict = {
-        "song_id": 1,
-        "song_name": "Full Song Name",
-        "song_artist": "Artist Name",
-        "song_album": "album1",
-        "song_genre": "genre1",
-        "song_year": 2021,
-        "song_length": 3.5,
-        "song_rating": 4.5,
-        "song_listens": 100
-    }
-
-    return render_template("song_details.html", song=temp_song_dict)
+@app.route("/song-details/<int:song_id>", methods=["GET"])
+def song_details(song_id):
+    song = Song.query.get(song_id)
+    if song:
+        return render_template("song_details.html", song=song)
+    else:
+        return render_template("index.html")
 
 @app.route("/creator-account", methods = ["GET", "POST"])
 def creator_account():
@@ -149,9 +141,7 @@ def creator_dashboard():
                 songs_with_ratings += 1
 
         rating = rating_sum / songs_with_ratings
-
-        song_list = [song.name for song in songs]
-        return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=rating, song_list = song_list)
+        return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=rating, songs = songs)
     else:
         return redirect(url_for('user_login'))
 
