@@ -1,5 +1,5 @@
 from flask import current_app as app, render_template, request, redirect, url_for, session
-from application.models import User
+from application.models import User, Song, Album
 from application.database import db
 import application.services as services
 
@@ -107,10 +107,25 @@ def creator_home():
     else:
         return redirect(url_for('user_login'))
 
-@app.route("/song-upload", methods = ["GET"])
+@app.route("/song-upload", methods = ["GET", "POST"])
 def song_upload():
     if 'user_id' in session:
-        return render_template("song_upload.html", username=session['username'], type=session['type'])
+        albums = Album.query.filter_by(user=session['user_id']).all()
+        if request.method == "POST":
+            title = request.form.get('title')
+            artist = request.form.get('artist')
+            release_date = request.form.get('release-date')
+            lyrics = request.form.get('lyrics')
+            duration = request.form.get('duration')
+            album = request.form.get('album')
+
+            song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date)
+            db.session.add(song)
+            db.session.commit()
+            message = "Song uploaded successfully, redirecting to creator home page"
+            return render_template("song_upload.html", albums=albums, message=message)
+        else:
+            return render_template("song_upload.html", albums=albums)
     else:
         return redirect(url_for('user_login'))
 
