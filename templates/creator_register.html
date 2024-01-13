@@ -9,7 +9,7 @@
     </form>
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-account" style="margin-right: 10px;">Creator Account</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
@@ -25,6 +25,14 @@
 {% block content %}
 
 
+{% if message %}
+<div class="container-sm" style="width: 800px;">
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+</div>
+{% endif %}
+
 <div class="container-sm border border-dark" style="margin-top: 150px; margin-bottom: 150px; padding: 100px; width: 800px; border-radius: 10px;">
     <div>
         <h1 class="text-center" style="margin-top: 10px; margin-bottom: 30px;">Register as Creator</h1>
@@ -32,10 +40,25 @@
     </div>
     <br><br>
     <div class="text-center" style="display: flex; justify-content: center; align-items: center;">
-        <a href="#" class="btn btn-success btn-lg rounded-circle" style="font-size: 40px; width: 120px; height: 120px; line-height: 120px; display: flex; justify-content: center; align-items: center;">
-            <span style="display: inline-block; vertical-align: middle;">+</span>
-        </a>
+        <form method="POST">
+            <button type="submit" class="btn btn-success btn-lg rounded-circle" style="font-size: 40px; width: 120px; height: 120px; line-height: 120px; display: flex; justify-content: center; align-items: center;">
+                <span style="display: inline-block; vertical-align: middle;">+</span>
+            </button>
+        </form>
     </div>
 </div>
+
+<script>
+// Function to redirect after a 2 sec delay
+function redirectToAnotherPage() {
+    var message = "{{ message }}"
+    if (message) {
+        setTimeout(function() {
+        window.location.href = "/creator-home";
+    }, 5000);
+    }
+}
+window.onload = redirectToAnotherPage;
+</script>
 
 {% endblock content %}

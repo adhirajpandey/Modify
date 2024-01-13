@@ -17,12 +17,17 @@ def user_register():
 
         if services.input_validation(username, password):
             user = User(username=username, password=password, type='general')
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('user_login'))
+            user_details = User.query.filter_by(username=username).first()
+            if user_details:
+                error_message = "Username already exists"
+                return render_template("user_register.html", error=error_message)
+            else:
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for('user_login'))
         else:
             error_message = "Length of username and password should be greater than 5"
-            return render_template("user_register.html", error=error_message)
+            return render_template("user_register.html", error=error_message)        
 
     return render_template("user_register.html")
 
@@ -37,7 +42,8 @@ def user_login():
             if user:
                 session['username'] = username
                 session['type'] = user.type
-                return render_template("user_home.html", username=username, type=user.type)
+                session['user_id'] = user.id
+                return redirect(url_for('user_home'))
             else:
                 error_message = "Invalid username or password"
                 return render_template("user_login.html", error=error_message)
@@ -56,7 +62,10 @@ def admin_login():
 
 @app.route("/user-home", methods = ["GET"])
 def user_home():
-    return render_template("user_home.html")
+    if 'username' in session:
+        return render_template("user_home.html", username=session['username'], type=session['type'])
+    else:
+        return redirect(url_for('user_login'))
 
 @app.route("/song-details", methods = ["GET"])
 def song_details():
@@ -74,20 +83,36 @@ def song_details():
 
     return render_template("song_details.html", song=temp_song_dict)
 
-@app.route("/creator-account", methods = ["GET"])
+@app.route("/creator-account", methods = ["GET", "POST"])
 def creator_account():
-    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
-    return render_template("creator_register.html")
+    if 'user_id' in session:
+        user = User.query.filter_by(id=session['user_id']).first()
+        if user.type == 'creator':
+            return redirect(url_for('creator_home'))
+        else:
+            if request.method == "POST":
+                user.type = 'creator'
+                db.session.commit()
+                message = "Your account has been registered as creator account, Now redirecting to creator home page"
+                return render_template("creator_register.html", message = message)
+            else:
+                return render_template("creator_register.html")
+    else:
+        return redirect(url_for('user_login'))
 
 @app.route("/creator-home", methods = ["GET"])
 def creator_home():
-    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
-    return render_template("creator_home.html")
+    if 'user_id' in session:
+        return render_template("creator_home.html")
+    else:
+        return redirect(url_for('user_login'))
 
 @app.route("/song-upload", methods = ["GET"])
 def song_upload():
-    # if already creator account, redirect to creator home to directly upload songs else open creator registration page
-    return render_template("song_upload.html")
+    if 'user_id' in session:
+        return render_template("song_upload.html", username=session['username'], type=session['type'])
+    else:
+        return redirect(url_for('user_login'))
 
 @app.route("/creator-dashboard", methods = ["GET"])
 def creator_dashboard():
