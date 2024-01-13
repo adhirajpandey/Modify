@@ -1,4 +1,4 @@
-from flask import current_app as app, render_template, request, redirect, url_for
+from flask import current_app as app, render_template, request, redirect, url_for, session
 from application.models import User
 from application.database import db
 import application.services as services
@@ -21,7 +21,7 @@ def user_register():
             db.session.commit()
             return redirect(url_for('user_login'))
         else:
-            error_message = "Invalid username or password"
+            error_message = "Length of username and password should be greater than 5"
             return render_template("user_register.html", error=error_message)
 
     return render_template("user_register.html")
@@ -35,12 +35,20 @@ def user_login():
         if services.input_validation(username, password):
             user = User.query.filter_by(username=username, password=password).first()
             if user:
-                return redirect(url_for('index'))
+                session['username'] = username
+                session['type'] = user.type
+                return render_template("user_home.html", username=username, type=user.type)
             else:
                 error_message = "Invalid username or password"
                 return render_template("user_login.html", error=error_message)
    
     return render_template("user_login.html")
+
+@app.route("/logout", methods = ["GET", "POST"])
+def logout():
+    session.pop('username', None)
+    session.pop('type', None)
+    return redirect(url_for('index'))
 
 @app.route("/admin-login", methods = ["GET"])
 def admin_login():

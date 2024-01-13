@@ -7,4 +7,5 @@ class Config():
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(SQLITE_DB_DIR, SQLITE_DB_NAME)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
+    SECRET_KEY = os.urandom(12)
 
