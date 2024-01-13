@@ -184,3 +184,40 @@ def song_edit(song_id):
             return render_template("song_edit.html", song_details=song_details)
     else:
         return redirect(url_for('user_login'))
+    
+@app.route("/profile", methods = ["GET", "POST"])
+def profile():
+    if 'user_id' in session:
+        profile_details = User.query.filter_by(id=session['user_id']).first()
+        if request.method == "POST":
+            name = request.form.get('name')
+            email = request.form.get('email')
+
+            print(name, email)
+
+            profile_details.name = name
+            profile_details.email = email
+            
+            db.session.commit()
+
+            message = "Profile Edited Successfully, redirecting to Creator Dashboard"
+            return render_template("profile.html", profile_details=profile_details, message=message)
+        else:
+            return render_template("profile.html", profile_details=profile_details)
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/song-delete/<int:song_id>", methods = ["GET", "POST"])
+def song_delete(song_id):
+    if 'user_id' in session and session['type'] == 'creator':
+        song_details = Song.query.filter_by(id=song_id).first()
+        if request.method == "POST":
+            db.session.delete(song_details)
+            db.session.commit()
+
+            message = "Song Edited Successfully, redirecting to Creator Dashboard"
+            return render_template("song_delete.html", song_details=song_details, message=message)
+        else:
+            return render_template("song_delete.html", song_details=song_details)
+    else:
+        return redirect(url_for('user_login'))

@@ -34,40 +34,25 @@
 {% endif %}
 
 <div class="container-sm border border-dark" style="margin-top: 50px; margin-bottom: 50px; padding:30px; border-radius: 10px; width: 900px;">
-    <h1 class="text-center">Edit Song</h1>    
+    <h1 class="text-center">Profile</h1>    
 
     <div style="display: flex; justify-content: center;">
         <form method="POST">
             <div class="form-group" style="margin-bottom: 10px;">
-                <label for="title"><strong>Title</strong></label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ song_details.name }}" palceholder="Enter Title" style="width: 800px;" required>
+                <label for="type"><strong>Username</strong></label>
+                <input class="form-control" type="text" value="{{ profile_details.username }}" style="width: 800px;" aria-label="Disabled input example" disabled readonly>
             </div>
             <div class="form-group" style="margin-bottom: 10px;">
-                <label for="artist"><strong>Artist</strong></label>
-                <input type="text" class="form-control" id="artist" name="artist" value="{{ song_details.artist }}" placeholder="Enter artist" style="width: 800px;" required>
+                <label for="name"><strong>Name</strong></label>
+                <input type="text" class="form-control" id="title" name="name" value="{% if profile_details.name == None %}{% else %}{{ profile_details.name }}{% endif %}" style="width: 800px;" palceholder="Enter Name">
             </div>
             <div class="form-group" style="margin-bottom: 10px;">
-                <label for="release-date"><strong>Release Date</strong></label>
-                <input type="date" class="form-control" id="release-date" name="release-date" value="{{ song_details.release_date }}" style="width: 800px;" required>
+                <label for="email"><strong>Email</strong></label>
+                <input class="form-control" type="email" name="email" value="{% if profile_details.email == None %}{% else %}{{ profile_details.email }}{% endif %}"  style="width: 800px;" palceholder="Enter Email">
             </div>
             <div class="form-group" style="margin-bottom: 10px;">
-                <label for="duration"><strong>Duration (in seconds)</strong></label>
-                <input type="number" class="form-control" id="duration" name="duration" value="{{ song_details.duration }}" max="600" placeholder="Enter Duration (in seconds)" style="width: 800px;" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="album"><strong>Album</strong></label>
-                <select class="form-select" name="album" value="{{ song_details.album}}">
-                    <option value="none">None</option>
-                    {% if albums %}
-                        {% for album in albums %}
-                            <option value="{{ album['id'] }}">{{ album['name'] }}</option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </div>
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="lyrics"><strong>Lyrics</strong></label>
-                <textarea class="form-control" id="lyrics" name="lyrics" rows="5" placeholder="Enter lyrics" style="width: 800px;">{{ song_details.lyrics }}</textarea>
+                <label for="type"><strong>Account Type</strong></label>
+                <input class="form-control" type="text" value="{{ profile_details.type.title() }}" style="width: 800px;" aria-label="Disabled input example" disabled readonly>
             </div>
             <br>
             <div style="text-align: center;">
