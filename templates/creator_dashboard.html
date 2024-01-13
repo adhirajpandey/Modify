@@ -9,7 +9,7 @@
     </form>
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/content1' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
+            <a class="nav-link {% if request.path == '/creator-home' %} active {% endif %}" href="/creator-register" style="margin-right: 10px;">Creator Account</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {% if request.path == '/content2' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
@@ -53,7 +53,7 @@
                 <h5 class="card-title" style="margin: 0;">{{ song.name }}</h5>
                 <div>
                     <a href="/song-details/{{ song.id }}" class="btn btn-dark ms-3">View Lyrics</a>
-                    <a href="#" class="btn btn-dark ms-3">Edit</a>
+                    <a href="/song-edit/{{ song.id }}" class="btn btn-dark ms-3">Edit</a>
                     <a href="#" class="btn btn-danger ms-3">Delete</a>
                 </div>
             </div>

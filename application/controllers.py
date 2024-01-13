@@ -140,7 +140,7 @@ def creator_dashboard():
                 rating_sum += song.rating
                 songs_with_ratings += 1
 
-        rating = rating_sum / songs_with_ratings
+        rating = round(rating_sum / songs_with_ratings, 1)
         return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=rating, songs = songs)
     else:
         return redirect(url_for('user_login'))
@@ -156,3 +156,31 @@ def admin_all_tracks():
 @app.route("/admin-all-albums", methods = ["GET"])
 def admin_all_albums():
     return render_template("admin_all_albums.html")
+
+@app.route("/song-edit/<int:song_id>", methods = ["GET", "POST"])
+def song_edit(song_id):
+    if 'user_id' in session and session['type'] == 'creator':
+        song_details = Song.query.filter_by(id=song_id).first()
+        if request.method == "POST":
+            new_title = request.form.get('title')
+            new_artist = request.form.get('artist')
+            new_release_date = request.form.get('release-date')
+            new_lyrics = request.form.get('lyrics')
+            new_duration = request.form.get('duration')
+            new_album = request.form.get('album')
+
+            song_details.name = new_title
+            song_details.artist = new_artist
+            song_details.release_date = new_release_date
+            song_details.lyrics = new_lyrics
+            song_details.duration = new_duration
+            song_details.album = new_album            
+            
+            db.session.commit()
+
+            message = "Song Edited Successfully, redirecting to Creator Dashboard"
+            return render_template("song_edit.html", song_details=song_details, message=message)
+        else:
+            return render_template("song_edit.html", song_details=song_details)
+    else:
+        return redirect(url_for('user_login'))
