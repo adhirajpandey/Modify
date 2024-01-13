@@ -102,15 +102,15 @@ def creator_account():
 
 @app.route("/creator-home", methods = ["GET"])
 def creator_home():
-    if 'user_id' in session:
+    if 'user_id' in session and session['type'] == 'creator':
         return render_template("creator_home.html")
     else:
         return redirect(url_for('user_login'))
 
 @app.route("/song-upload", methods = ["GET", "POST"])
 def song_upload():
-    if 'user_id' in session:
-        albums = Album.query.filter_by(user=session['user_id']).all()
+    if 'user_id' in session and session['type'] == 'creator':
+        albums = Album.query.filter_by(user_id=session['user_id']).all()
         if request.method == "POST":
             title = request.form.get('title')
             artist = request.form.get('artist')
@@ -119,10 +119,13 @@ def song_upload():
             duration = request.form.get('duration')
             album = request.form.get('album')
 
-            song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date)
+            if album == "none":
+                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, release_date=release_date, user_id=session['user_id'])
+            else:
+                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date, user_id=session['user_id'])
             db.session.add(song)
             db.session.commit()
-            message = "Song uploaded successfully, redirecting to creator home page"
+            message = "Song uploaded successfully, redirecting to Creator Home Page"
             return render_template("song_upload.html", albums=albums, message=message)
         else:
             return render_template("song_upload.html", albums=albums)
@@ -131,7 +134,26 @@ def song_upload():
 
 @app.route("/creator-dashboard", methods = ["GET"])
 def creator_dashboard():
-    return render_template("creator_dashboard.html")
+    if 'user_id' in session and session['type'] == 'creator':
+        albums = Album.query.filter_by(user_id=session['user_id']).all()
+        albums_count = len(albums)
+        songs = Song.query.filter_by(user_id=session['user_id']).all()
+        songs_count = len(songs)
+        
+        rating_sum = 0
+        songs_with_ratings = 0
+
+        for song in songs:
+            if song.rating:
+                rating_sum += song.rating
+                songs_with_ratings += 1
+
+        rating = rating_sum / songs_with_ratings
+
+        song_list = [song.name for song in songs]
+        return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=rating, song_list = song_list)
+    else:
+        return redirect(url_for('user_login'))
 
 @app.route("/admin-dashboard", methods = ["GET"])
 def admin_dashboard():

@@ -15,19 +15,20 @@ class Song(db.Model):
     album = db.Column(db.Integer, db.ForeignKey('album.id', name='fk_song_album'), nullable=True)
     release_date = db.Column(db.String(120), nullable=False)
     rating = db.Column(db.Integer, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_song_user'), nullable=False)
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(120), nullable=False)
     artist = db.Column(db.String(120), nullable=False)
     genre = db.Column(db.String(120), nullable=False)
-    user = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_album_user'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_album_user'), nullable=False)
 
 class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(120), nullable=True)
-    user = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_playlist_user'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_playlist_user'), nullable=False)
 
 class PlaylistSong(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
