@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/creator-home' %} active {% endif %}" href="/creator-account" style="margin-right: 10px;">Creator Mode</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/profile' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+        </li>
+    </ul>
+    <div class="d-flex">
+        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
+    </div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+{% if message %}
+<div class="container-sm" style="width: 900px;">
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+</div>
+{% endif %}
+
+<div class="container-sm border border-dark" style="margin-top: 50px; margin-bottom: 50px; padding:30px; border-radius: 10px; width: 900px;">
+    <h1 class="text-center">Create Album</h1>    
+
+    <div style="display: flex; justify-content: center;">
+        <form method="POST">
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="name"><strong>Name</strong></label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" style="width: 800px;" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="artist"><strong>Artist</strong></label>
+                <input type="text" class="form-control" id="artist" name="artist" placeholder="Enter artist" style="width: 800px;" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="genre"><strong>Genre</strong></label>
+                <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter genre" style="width: 800px;" required>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Function to redirect after a 2 sec delay
+    function redirectToAnotherPage() {
+        var message = "{{ message }}"
+        if (message) {
+            setTimeout(function() {
+            window.location.href = "/creator-home";
+        }, 5000);
+        }
+    }
+    window.onload = redirectToAnotherPage;
+    </script>
+
+
+{% endblock content %}

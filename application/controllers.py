@@ -221,26 +221,7 @@ def song_delete(song_id):
             return render_template("song_delete.html", song_details=song_details)
     else:
         return redirect(url_for('user_login'))
-    
-@app.route("/album-create", methods = ["GET", "POST"])
-def album_create():
-    if 'user_id' in session and session['type'] == 'creator':
-        if request.method == "POST":
-            title = request.form.get('title')
-            release_date = request.form.get('release-date')
-            description = request.form.get('description')
-
-            album = Album(title=title, release_date=release_date, description=description, user_id=session['user_id'])
-            db.session.add(album)
-            db.session.commit()
-
-            message = "Album Created Successfully, redirecting to Creator Dashboard"
-            return render_template("album_create.html", message=message)
-        else:
-            return render_template("album_create.html")
-    else:
-        return redirect(url_for('user_login'))
-    
+     
 @app.route("/creator-songs", methods = ["GET", "POST"])
 def creator_songs():
     if 'user_id' in session and session['type'] == 'creator':
@@ -281,5 +262,46 @@ def album_delete(album_id):
             return render_template("album_delete.html", album=album, message=message)
         else:
             return render_template("album_delete.html", album=album)
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/album-create", methods = ["GET", "POST"])
+def album_create():
+    if 'user_id' in session and session['type'] == 'creator':
+        if request.method == "POST":
+            name = request.form.get('name')
+            artist = request.form.get('artist')
+            genre = request.form.get('genre')
+
+            album = Album(name=name, artist=artist, genre=genre, user_id=session['user_id'])
+            db.session.add(album)
+            db.session.commit()
+
+            message = "Album Created Successfully, redirecting to Creator Dashboard"
+            return render_template("album_create.html", message=message)
+        else:
+            return render_template("album_create.html")
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/album-edit/<int:album_id>", methods = ["GET", "POST"])
+def album_edit(album_id):
+    if 'user_id' in session and session['type'] == 'creator':
+        album = Album.query.filter_by(id=album_id).first()
+        if request.method == "POST":
+            new_name = request.form.get('name')
+            new_artist = request.form.get('artist')
+            new_genre = request.form.get('genre')
+
+            album.name = new_name
+            album.artist = new_artist
+            album.genre = new_genre
+            
+            db.session.commit()
+
+            message = "Album Edited Successfully, redirecting to Creator Dashboard"
+            return render_template("album_edit.html", album=album, message=message)
+        else:
+            return render_template("album_edit.html", album=album)
     else:
         return redirect(url_for('user_login'))
