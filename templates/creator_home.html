@@ -24,16 +24,37 @@
 
 {% block content %}
 
-<div class="container-sm border border-dark" style="margin-top: 150px; margin-bottom: 150px; padding: 100px; width: 800px; border-radius: 10px;">
+<div class="container-sm border border-dark" style="margin-top: 50px; margin-bottom: 50px; padding: 20px; width: 800px; border-radius: 10px;">
     <div>
         <h1 class="text-center" style="margin-top: 10px; margin-bottom: 30px;">Start with Uploading Songs</h1>
     </div>
-    <br><br>
     <div class="text-center" style="display: flex; justify-content: center; align-items: center;">
         <a href="/song-upload" class="btn btn-success btn-lg rounded-circle" style="font-size: 40px; width: 120px; height: 120px; line-height: 120px; display: flex; justify-content: center; align-items: center;">
             <span style="display: inline-block; vertical-align: middle;">+</span>
         </a>
     </div>
+</div>
+
+<div class="container-sm border border-dark" style="margin-top: 50px; margin-bottom: 50px; padding: 20px; width: 800px; border-radius: 10px;">
+    <div>
+        <h1 class="text-center" style="margin-top: 10px; margin-bottom: 30px;">Quick Links</h1>
+    </div>
+    <div class="container mt text-center">
+        <div class="row">
+            <div class="col">
+                <a href="/creator-dashboard" class="btn btn-dark">Your Dashboard</a>
+            </div>
+            <div class="col">
+                <a href="/album-create" class="btn btn-dark">Create Album</a>
+            </div>
+            <div class="col">
+                <a href="/creator-albums" class="btn btn-dark">Your Albums</a>
+            </div>
+            <div class="col">
+                <a href="/creator-songs" class="btn btn-dark">Your Songs</a>
+            </div>
+        </div>
+      </div>
 </div>
 
 {% endblock content %}

@@ -25,36 +25,16 @@
 
 {% block content %}
 
-<div class="container-sm border border-dark" style="padding:20px; border-radius: 10px;">
-    <h1>Dashboard</h1>
-    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-        <div class="container-sm border" style="padding:20px">
-            <h2 class="text-center">Total Songs Uploaded</h2>
-            <h3 class="text-center"><strong>{{ songs_count }}</strong></h3>
-        </div>
-        <div class="container-sm border" style="padding:20px">
-            <h2 class="text-center">Average Rating</h2>
-            <h3 class="text-center"><strong>{{ rating }}</strong></h3>
-        </div>
-        <div class="container-sm border" style="padding:20px">
-            <h2 class="text-center">Total Album</h2>
-            <h3 class="text-center"><strong>{{ albums_count }}</strong></h3>
-        </div>
-    </div>
-</div>
-
-<br>
-
 <div class="container-sm border border-dark" style="margin-bottom:10px; padding:20px; border-radius: 10px;" >
-    <h1>Your Uploads</h1>
-    {% for song in songs %}
+    <h1>Your Albums</h1>
+    {% for album in albums %}
         <div class="card" style="margin-left: 25px; margin-right: 25px; margin-top: 20px;">
             <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-                <h5 class="card-title" style="margin: 0;">{{ song.name }}</h5>
+                <h5 class="card-title" style="margin: 0;">{{ album.name }}</h5>
                 <div>
-                    <a href="/song-details/{{ song.id }}" class="btn btn-dark ms-3">View Lyrics</a>
-                    <a href="/song-edit/{{ song.id }}" class="btn btn-dark ms-3">Edit</a>
-                    <a href="/song-delete/{{ song.id }}" class="btn btn-danger ms-3">Delete</a>
+                    <a href="/album-details/{{ album.id }}" class="btn btn-dark ms-3">View Album</a>
+                    <a href="/album-edit/{{ album.id }}" class="btn btn-dark ms-3">Edit</a>
+                    <a href="/album-delete/{{ album.id }}" class="btn btn-danger ms-3">Delete</a>
                 </div>
             </div>
         </div>
