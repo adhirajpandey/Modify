@@ -78,89 +78,21 @@
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
-        <h2 class="text-start">Genre 1</h2>
-        <a href="#" class="btn btn-dark">See More</a>
+        <h2 class="text-start">{{ featured_album.name }}</h2>
+        <a href="/album-details/{{ featured_album.id }}" class="btn btn-dark">See More</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
+        {% for song in featured_album_songs %}
         <div class="col ms-2 mt-3">
             <div class="card" style="width: 14rem; margin-bottom: 10px;;">
                 <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 1</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
+                    <h5 class="card-title">{{ song.name }}</h5>
+                    <a href="/song-details/{{ song.id }}" class="btn btn-primary">Read Lyrics</a>
                 </div>
             </div>
         </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 2</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 3</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 4</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 5</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 6</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 7</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Song Name 8</h5>
-                    <a href="#" class="btn btn-primary">Read Lyrics</a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
 
     </div>
 </div>

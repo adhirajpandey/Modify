@@ -66,8 +66,9 @@ def user_home():
         RATING_LIMIT = 3
         recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
         user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
-        print(user_playlists)
-        return render_template("user_home.html", username=session['username'], recommended_tracks=recommended_tracks, user_playlists=user_playlists)
+        featured_album = Album.query.filter(Album.id==1).first()
+        featured_album_songs = Song.query.filter(Song.album==1).limit(10).all()
+        return render_template("user_home.html", username=session['username'], recommended_tracks=recommended_tracks, user_playlists=user_playlists, featured_album=featured_album, featured_album_songs=featured_album_songs)
     else:
         return redirect(url_for('user_login'))
 
