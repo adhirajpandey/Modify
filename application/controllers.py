@@ -1,5 +1,5 @@
 from flask import current_app as app, render_template, request, redirect, url_for, session
-from application.models import User, Song, Album
+from application.models import User, Song, Album, Playlist
 from application.database import db
 import application.services as services
 
@@ -65,7 +65,9 @@ def user_home():
     if 'user_id' in session:
         RATING_LIMIT = 3
         recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
-        return render_template("user_home.html", username=session['username'], recommended_tracks = recommended_tracks)
+        user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
+        print(user_playlists)
+        return render_template("user_home.html", username=session['username'], recommended_tracks=recommended_tracks, user_playlists=user_playlists)
     else:
         return redirect(url_for('user_login'))
 

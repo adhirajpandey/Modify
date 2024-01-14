@@ -60,86 +60,17 @@
         <a href="#" class="btn btn-dark">Create New Playlist</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
+        {% for playlist in user_playlists %}
         <div class="col ms-2 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
+            <div class="card" style="width: 14rem; margin-bottom: 10px;">
                 <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 1</h5>
+                    <h5 class="card-title">{{ playlist.name }}</h5>
                     <a href="#" class="btn btn-primary">View Tracks</a>
                 </div>
             </div>
         </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 2</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 3</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 4</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 5</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 6</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 7</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col ms-5 mt-3">
-            <div class="card" style="width: 14rem; margin-bottom: 10px;;">
-                <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Playlist 8</h5>
-                    <a href="#" class="btn btn-primary">View Tracks</a>
-                </div>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
 </div>
 
