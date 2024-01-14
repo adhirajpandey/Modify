@@ -62,8 +62,10 @@ def admin_login():
 
 @app.route("/user-home", methods = ["GET"])
 def user_home():
-    if 'username' in session:
-        return render_template("user_home.html", username=session['username'], type=session['type'])
+    if 'user_id' in session:
+        RATING_LIMIT = 3
+        recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
+        return render_template("user_home.html", username=session['username'], recommended_tracks = recommended_tracks)
     else:
         return redirect(url_for('user_login'))
 
