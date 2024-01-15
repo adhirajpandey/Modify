@@ -310,3 +310,22 @@ def album_edit(album_id):
             return render_template("album_edit.html", album=album)
     else:
         return redirect(url_for('user_login'))
+    
+@app.route("/playlist-create", methods = ["GET", "POST"])
+def playlist_create():
+    if 'user_id' in session and session['type'] == 'creator':
+        if request.method == "POST":
+            name = request.form.get('name')
+            description = request.form.get('descriptiont')
+            genre = request.form.get('genre')
+
+            playlist = Playlist(name=name, description=description, user_id=session['user_id'])
+            db.session.add(playlist)
+            db.session.commit()
+
+            message = "Album Created Successfully, redirecting to Creator Dashboard"
+            return render_template("playlist_create.html", message=message)
+        else:
+            return render_template("playlist_create.html")
+    else:
+        return redirect(url_for('user_login'))
