@@ -1,5 +1,5 @@
 from flask import current_app as app, render_template, request, redirect, url_for, session
-from application.models import User, Song, Album, Playlist
+from application.models import User, Song, Album, Playlist, PlaylistSong
 from application.database import db
 import application.services as services
 
@@ -74,11 +74,28 @@ def user_home():
 
 @app.route("/song-details/<int:song_id>", methods=["GET"])
 def song_details(song_id):
-    song = Song.query.get(song_id)
-    if song:
-        return render_template("song_details.html", song=song)
+    if 'user_id' in session:
+        song = Song.query.get(song_id)
+        user_liked_songs_playlist_id = Playlist.query.filter_by(name='Liked Songs', user_id=session['user_id']).first().id
+        all_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).all()
+
+        playlist_without_song = []
+
+        for playlist in all_playlists:
+            a = PlaylistSong.query.filter_by(song=song_id, playlist=playlist.id).first()
+            if not a:
+                playlist_without_song.append(playlist)
+
+        if PlaylistSong.query.filter_by(song=song_id, playlist=user_liked_songs_playlist_id).first():
+            liked = True
+        else:
+            liked = False
+        if song:
+            return render_template("song_details.html", song=song, song_liked=liked, all_playlists=playlist_without_song)
+        else:
+            return render_template("index.html")
     else:
-        return render_template("index.html")
+        return redirect(url_for('user_login'))
 
 @app.route("/creator-account", methods = ["GET", "POST"])
 def creator_account():
@@ -327,5 +344,70 @@ def playlist_create():
             return render_template("playlist_create.html", message=message)
         else:
             return render_template("playlist_create.html")
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/song-like/<int:song_id>", methods=["POST"])
+def song_like(song_id):
+    if 'user_id' in session:
+        song_liked = request.form.get('song_liked')
+        playlist_id = Playlist.query.filter_by(name='Liked Songs', user_id=session['user_id']).first().id 
+        playlist_song = PlaylistSong.query.filter_by(song=song_id, playlist=playlist_id).first()
+
+        if song_liked == 'False':
+            if not playlist_song:
+                playlist_song = PlaylistSong(song=song_id, playlist=playlist_id)
+                db.session.add(playlist_song)
+        else:
+            if playlist_song:
+                db.session.delete(playlist_song)
+
+        db.session.commit()
+
+        return redirect(url_for('song_details', song_id=song_id))
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/song-playlist/", methods=["POST"])
+def song_playlist():
+    if 'user_id' in session:
+        song_id = request.form.get('song_id')
+        playlist_id = request.form.get('playlist')
+
+        playlist_song = PlaylistSong(song=song_id, playlist=playlist_id)
+        db.session.add(playlist_song)
+
+        db.session.commit()
+
+        return redirect(url_for('song_details', song_id=song_id))
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/playlist-details/<int:playlist_id>", methods=["GET"])
+def playlist_details(playlist_id):
+    if 'user_id' in session:
+        playlist = Playlist.query.filter_by(id=playlist_id).first()
+        playlist_songs_ids = PlaylistSong.query.filter_by(playlist=playlist_id).all()
+        playlist_songs = []
+        for playlist_song in playlist_songs_ids:
+            song = Song.query.filter_by(id=playlist_song.song).first()
+            playlist_songs.append(song)
+
+        return render_template("playlist_details.html", playlist=playlist, playlist_songs=playlist_songs)
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/playlist-remove/", methods=["POST"])
+def playlist_remove():
+    if 'user_id' in session:
+        song_id = request.form.get('song_id')
+        playlist_id = request.form.get('playlist_id')
+
+        playlist_song = PlaylistSong.query.filter_by(song=song_id, playlist=playlist_id).first()
+        if playlist_song:
+            db.session.delete(playlist_song)
+            db.session.commit()
+
+        return redirect(url_for('playlist_details', playlist_id=playlist_id))
     else:
         return redirect(url_for('user_login'))
