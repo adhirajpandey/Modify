@@ -411,3 +411,12 @@ def playlist_remove():
         return redirect(url_for('playlist_details', playlist_id=playlist_id))
     else:
         return redirect(url_for('user_login'))
+
+@app.route("/recommended-tracks", methods=["GET"])
+def recommended_tracks():
+    if 'user_id' in session:
+        RATING_LIMIT = 3
+        recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(20).all()
+        return render_template("recommended_tracks.html", recommended_tracks=recommended_tracks)
+    else:
+        return redirect(url_for('user_login'))
