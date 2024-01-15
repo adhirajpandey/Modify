@@ -420,3 +420,16 @@ def recommended_tracks():
         return render_template("recommended_tracks.html", recommended_tracks=recommended_tracks)
     else:
         return redirect(url_for('user_login'))
+    
+@app.route("/search-results", methods=["GET", "POST"])
+def search_results():
+    if 'user_id' in session:
+        if request.method == "GET":
+            search_query = request.args.get('query')
+            print(search_query)
+            search_results = Song.query.filter(Song.name.like("%"+search_query+"%")).all()
+            return render_template("search_results.html", search_results=search_results)
+        else:
+            return render_template("search_results.html")
+    else:
+        return redirect(url_for('user_login'))
