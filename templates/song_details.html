@@ -30,7 +30,7 @@
         <div class="card-body">
             <h1 class="card-title">{{  song.name }}</h1>
             <h3 class="card-text">{{ song.artist }} ({{ song.release_date[:4] }})</h3>
-            <h5 class="card-text">{{ song.rating }} out of 5</h5>
+            <h5 class="card-text">{{ song_rating }} out of 5</h5>
             <form method="POST" action="/song-like/{{ song.id }}">
                 <input type="hidden" name="song_liked" value="{{ song_liked }}">
                 {% if song_liked %}
@@ -99,7 +99,7 @@
                         
                         <!-- Rating input -->
                         <label for="rating">Rate the song:</label>
-                        <input type="number" id="rating" name="rating" min="1" max="5" value="3" required>
+                        <input type="number" id="rating" name="rating" min="1" max="5" value="{{ song_rating|int }}" required>
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-primary">Submit Rating</button>
                     </form>

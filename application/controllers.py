@@ -1,5 +1,5 @@
 from flask import current_app as app, render_template, request, redirect, url_for, session
-from application.models import User, Song, Album, Playlist, PlaylistSong
+from application.models import User, Song, Album, Playlist, PlaylistSong, RatingSong
 from application.database import db
 import application.services as services
 
@@ -76,6 +76,23 @@ def user_home():
 def song_details(song_id):
     if 'user_id' in session:
         song = Song.query.get(song_id)
+
+        rating_song = RatingSong.query.filter_by(song_id=song_id).all()
+        song_rating = 0
+        rating_sum = 0
+        for rating in rating_song:
+            rating_sum += rating.rating
+        if len(rating_song) > 0:
+            song_rating = round(rating_sum / len(rating_song), 1)
+        else:
+            song_rating = 0
+
+        DEFAULT_RATING = 3
+        user_song_rating = DEFAULT_RATING
+        user_song_rating = RatingSong.query.filter_by(song_id=song_id, user_id=session['user_id']).first()
+        if user_song_rating:
+            user_song_rating = user_song_rating.rating
+
         user_liked_songs_playlist_id = Playlist.query.filter_by(name='Liked Songs', user_id=session['user_id']).first().id
         all_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).all()
 
@@ -91,7 +108,7 @@ def song_details(song_id):
         else:
             liked = False
         if song:
-            return render_template("song_details.html", song=song, song_liked=liked, all_playlists=playlist_without_song)
+            return render_template("song_details.html", song=song, song_liked=liked, all_playlists=playlist_without_song, user_song_rating=user_song_rating, song_rating=song_rating)
         else:
             return render_template("index.html")
     else:
@@ -431,5 +448,27 @@ def search_results():
             return render_template("search_results.html", search_results=search_results)
         else:
             return render_template("search_results.html")
+    else:
+        return redirect(url_for('user_login'))
+    
+@app.route("/song-rating/", methods=["POST"])
+def song_rating():
+    if 'user_id' in session:
+        song_id = request.form.get('song_id')
+        rating = request.form.get('rating')
+        user_id = session['user_id']
+
+        # check if rating already exists
+        rating_song = RatingSong.query.filter_by(song_id=song_id, user_id=user_id).first()
+
+        if not rating_song:
+            rating_song = RatingSong(song_id=song_id, rating=rating, user_id=user_id)
+            db.session.add(rating_song)
+            db.session.commit()
+        else:
+            rating_song.rating = rating
+            db.session.commit()
+
+        return redirect(url_for('song_details', song_id=song_id))
     else:
         return redirect(url_for('user_login'))

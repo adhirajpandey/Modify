@@ -16,7 +16,6 @@ class Song(db.Model):
     lyrics = db.Column(db.String(120), nullable=True)
     album = db.Column(db.Integer, db.ForeignKey('album.id', name='fk_song_album'), nullable=True)
     release_date = db.Column(db.String(120), nullable=False)
-    rating = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_song_user'), nullable=False)
 
 class Album(db.Model):
@@ -36,3 +35,9 @@ class PlaylistSong(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     playlist = db.Column(db.Integer, db.ForeignKey('playlist.id', name='fk_playlistsong_playlist'), nullable=False)
     song = db.Column(db.Integer, db.ForeignKey('song.id', name='fk_playlistsong_song'), nullable=False)
+
+class RatingSong(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    rating = db.Column(db.Integer, nullable=False)
+    song_id = db.Column(db.Integer, db.ForeignKey('song.id', name='fk_playlistsong_song'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_playlistsong_user'), nullable=False)
