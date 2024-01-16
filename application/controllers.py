@@ -64,7 +64,8 @@ def admin_login():
 def user_home():
     if 'user_id' in session:
         RATING_LIMIT = 3
-        recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
+        # recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
+        recommended_tracks = Song.query.limit(10).all()
         user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
         featured_album = Album.query.filter(Album.id==1).first()
         featured_album_songs = Song.query.filter(Song.album==1).limit(10).all()
@@ -432,8 +433,9 @@ def playlist_remove():
 @app.route("/recommended-tracks", methods=["GET"])
 def recommended_tracks():
     if 'user_id' in session:
-        RATING_LIMIT = 3
-        recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(20).all()
+        # RATING_LIMIT = 3
+        # fetch any 10 songs
+        recommended_tracks = Song.query.limit(10).all()
         return render_template("recommended_tracks.html", recommended_tracks=recommended_tracks)
     else:
         return redirect(url_for('user_login'))
