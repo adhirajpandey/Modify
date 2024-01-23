@@ -169,19 +169,31 @@ def creator_dashboard():
     if 'user_id' in session and session['type'] == 'creator':
         albums = Album.query.filter_by(user_id=session['user_id']).all()
         albums_count = len(albums)
+        
         songs = Song.query.filter_by(user_id=session['user_id']).all()
         songs_count = len(songs)
-        
-        rating_sum = 0
-        songs_with_ratings = 0
 
-        for song in songs:
-            if song.rating:
-                rating_sum += song.rating
-                songs_with_ratings += 1
+        song_ids = [song.id for song in songs]
 
-        rating = round(rating_sum / songs_with_ratings, 1)
-        return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=rating, songs = songs)
+        songs_avg_ratings = []
+                
+        for id in song_ids:
+            rating_sum = 0
+            rating_song = RatingSong.query.filter_by(song_id=id).all()
+            for rating in rating_song:
+                rating_sum += rating.rating
+            if len(rating_song) > 0:
+                song_rating = round(rating_sum / len(rating_song), 1)
+            else:
+                song_rating = 0
+            songs_avg_ratings.append(song_rating)
+
+        avg_rating = 0
+        if len(songs_avg_ratings) > 0:
+            avg_rating = round(sum(songs_avg_ratings) / len(songs_avg_ratings), 1)
+        else:
+            avg_rating = 0
+        return render_template("creator_dashboard.html", albums_count=albums_count, songs_count=songs_count, rating=avg_rating, songs=songs)
     else:
         return redirect(url_for('user_login'))
 
