@@ -88,9 +88,17 @@ def user_home():
         # recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
         recommended_tracks = Song.query.limit(10).all()
         user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
-        featured_album = Album.query.filter(Album.id==1).first()
-        featured_album_songs = Song.query.filter(Song.album==1).limit(10).all()
-        return render_template("user_home.html", username=session['username'], recommended_tracks=recommended_tracks, user_playlists=user_playlists, featured_album=featured_album, featured_album_songs=featured_album_songs)
+        featured_album_id = 2
+        featured_album = Album.query.filter_by(id=featured_album_id).first()
+        featured_album_songs = Song.query.filter_by(album=featured_album_id).limit(10).all()
+        return render_template("user_home.html", 
+                               username=session['username'], 
+                               recommended_tracks=recommended_tracks, 
+                               user_playlists=user_playlists, 
+                               featured_album=featured_album, 
+                               featured_album_songs=featured_album_songs,
+                               featured_album_id=featured_album_id
+                               )
     else:
         return redirect(url_for('user_login'))
 
@@ -300,6 +308,10 @@ def admin_all_albums():
 def song_edit(song_id):
     if 'user_id' in session and session['type'] == 'creator':
         song_details = Song.query.filter_by(id=song_id).first()
+        if song_details.album != -1:
+                current_album_name = Album.query.filter_by(id=song_details.album).first().name
+        else:
+            current_album_name = "None"
         if request.method == "POST":
             new_title = request.form.get('title')
             new_artist = request.form.get('artist')
@@ -321,12 +333,8 @@ def song_edit(song_id):
             db.session.commit()
 
             message = "Song Edited Successfully, redirecting to Creator Dashboard"
-            return render_template("song_edit.html", song_details=song_details, message=message)
+            return render_template("song_edit.html", song_details=song_details, message=message, current_album_name=current_album_name)
         else:
-            if song_details.album != -1:
-                current_album_name = Album.query.filter_by(id=song_details.album).first().name
-            else:
-                current_album_name = "None"
             creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
             return render_template("song_edit.html", song_details=song_details, creator_albums=creator_albums, current_album_name=current_album_name)
     else:
