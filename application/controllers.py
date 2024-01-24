@@ -190,8 +190,14 @@ def search_results():
     if 'user_id' in session:
         if request.method == "GET":
             search_query = request.args.get('query')
-            search_results = Song.query.filter(Song.name.like("%" + search_query + "%")).all()
-            return render_template("search_results.html", search_results=search_results)
+            song_search_results = Song.query.filter(Song.name.like("%" + search_query + "%")).all()
+            album_search_results = Album.query.filter(Album.name.like("%" + search_query + "%")).all()
+            playlist_search_results = Playlist.query.filter(Playlist.name.like("%" + search_query + "%")).all()
+            return render_template("search_results.html",
+                                   song_search_results=song_search_results,
+                                   album_search_results=album_search_results,
+                                   playlist_search_results=playlist_search_results
+                                   )
         else:
             return render_template("search_results.html")
     else:
