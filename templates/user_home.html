@@ -3,22 +3,27 @@
 {% block navbar %}
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="d-flex mx-auto" action="/search-results" method="GET">
-        <input class="form-control me-2 text-center" type="search" name="query" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
-        <button class="btn btn-success" type="submit">Search</button>
-    </form>
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/creator-home' %} active {% endif %}" href="/creator-account" style="margin-right: 10px;">Creator Mode</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/profile' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
         </li>
     </ul>
-    <div class="d-flex">
-        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
-    </div>
+    <form class="d-flex mx-auto" action="/search-results" method="GET">
+        <input class="form-control me-2 text-center" type="search" name="query" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 550px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/creator-home' %} active {% endif %}" href="/creator-account">Creator Mode</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/profile' %} active {% endif %}" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-danger btn-block">Logout</button></a>
+        </li>
+    </ul>
 </div>
+
 {% endblock navbar %}
 
 
@@ -31,7 +36,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center" style="padding-right:10px;">
         <h2 class="text-start">Recommended Tracks</h2>
-        <a href="/recommended-tracks" class="btn btn-dark">See More</a>
+        <a href="/recommended-tracks" class="btn btn-primary">See More</a>
     </div>
 
     <div class="d-flex flex-nowrap overflow-auto">
@@ -55,7 +60,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="text-start">Your Playlists</h2>
-        <a href="/playlist-create" class="btn btn-dark">Create New Playlist</a>
+        <a href="/playlist-create" class="btn btn-primary">Create New Playlist</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
         {% for playlist in user_playlists %}
@@ -75,7 +80,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="text-start">{{ featured_album.name }}</h2>
-        <a href="/album-details/{{ featured_album_id }}" class="btn btn-dark">See More</a>
+        <a href="/album-details/{{ featured_album_id }}" class="btn btn-primary">See More</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
         {% for song in featured_album_songs %}
