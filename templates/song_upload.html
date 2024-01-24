@@ -58,8 +58,8 @@
                 <label for="album"><strong>Album</strong></label>
                 <select class="form-select" name="album">
                     <option value="none">None</option>
-                    {% if albums %}
-                        {% for album in albums %}
+                    {% if creator_albums %}
+                        {% for album in creator_albums %}
                             <option value="{{ album['id'] }}">{{ album['name'] }}</option>
                         {% endfor %}
                     {% endif %}

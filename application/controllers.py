@@ -189,7 +189,8 @@ def song_upload():
             message = "Song uploaded successfully, redirecting to Creator Home Page"
             return render_template("song_upload.html", albums=albums, message=message)
         else:
-            return render_template("song_upload.html", albums=albums)
+            creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
+            return render_template("song_upload.html", creator_albums=creator_albums)
     else:
         return redirect(url_for('user_login'))
 
