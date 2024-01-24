@@ -36,7 +36,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center" style="padding-right:10px;">
         <h2 class="text-start">Recommended Tracks</h2>
-        <a href="/recommended-tracks" class="btn btn-primary">See More</a>
+        <a href="/recommended-tracks" class="btn btn-secondary">See More</a>
     </div>
 
     <div class="d-flex flex-nowrap overflow-auto">
@@ -60,7 +60,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="text-start">Your Playlists</h2>
-        <a href="/playlist-create" class="btn btn-primary">Create New Playlist</a>
+        <a href="/playlist-create" class="btn btn-secondary">Create New Playlist</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
         {% for playlist in user_playlists %}
@@ -80,7 +80,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="text-start">{{ featured_album.name }}</h2>
-        <a href="/album-details/{{ featured_album_id }}" class="btn btn-primary">See More</a>
+        <a href="/album-details/{{ featured_album_id }}" class="btn btn-secondary">See More</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
         {% for song in featured_album_songs %}
