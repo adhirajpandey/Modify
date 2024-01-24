@@ -43,6 +43,12 @@ def user_login():
                 session['username'] = username
                 session['type'] = user.type
                 session['user_id'] = user.id
+
+                liked_songs_playlist = Playlist.query.filter_by(name='Liked Songs', user_id=user.id).first()
+                if not liked_songs_playlist:
+                    playlist = Playlist(name='Liked Songs', description='Liked Songs', user_id=user.id)
+                    db.session.add(playlist)
+                    db.session.commit()
                 return redirect(url_for('user_home'))
             else:
                 error_message = "Invalid username or password"
@@ -281,7 +287,6 @@ def admin_all_albums():
                 albums = Album.query.filter_by(genre=genre[0]).all()
                 all_albums[genre[0]] = albums            
 
-            print(all_albums)
 
             return render_template("admin_all_albums.html",
                                     all_albums=all_albums
@@ -339,21 +344,6 @@ def profile():
             return render_template("profile.html", profile_details=profile_details)
     else:
         return redirect(url_for('user_login'))
-    
-@app.route("/song-delete/<int:song_id>", methods = ["GET", "POST"])
-def song_delete(song_id):
-    if 'user_id' in session and session['type'] == 'creator':
-        song_details = Song.query.filter_by(id=song_id).first()
-        if request.method == "POST":
-            db.session.delete(song_details)
-            db.session.commit()
-
-            message = "Song Edited Successfully, redirecting to Creator Dashboard"
-            return render_template("song_delete.html", song_details=song_details, message=message)
-        else:
-            return render_template("song_delete.html", song_details=song_details)
-    else:
-        return redirect(url_for('user_login'))
      
 @app.route("/creator-songs", methods = ["GET", "POST"])
 def creator_songs():
@@ -383,22 +373,7 @@ def album_details(album_id):
             return render_template("album_details.html",album=album, songs=songs)
     else:
         return redirect(url_for('user_login'))
-    
-@app.route("/album-delete/<int:album_id>", methods = ["GET", "POST"])
-def album_delete(album_id):
-    if 'user_id' in session and session['type'] == 'creator':
-        album = Album.query.filter_by(id=album_id).first()
-        if request.method == "POST":
-            db.session.delete(album)
-            db.session.commit()
-
-            message = "Album Deleted Successfully, redirecting to Creator Dashboard"
-            return render_template("album_delete.html", album=album, message=message)
-        else:
-            return render_template("album_delete.html", album=album)
-    else:
-        return redirect(url_for('user_login'))
-    
+        
 @app.route("/album-create", methods = ["GET", "POST"])
 def album_create():
     if 'user_id' in session and session['type'] == 'creator':
@@ -566,3 +541,89 @@ def song_rating():
         return redirect(url_for('song_details', song_id=song_id))
     else:
         return redirect(url_for('user_login'))
+    
+@app.route("/album-delete", methods=["POST"])
+def album_delete():
+    if 'user_id' in session:
+        if session['type'] == 'admin' or session['type'] == 'creator':
+            album_id = request.form.get('album_id')
+            album = Album.query.filter_by(id=album_id).first()
+            
+            if album:
+                db.session.delete(album)
+                db.session.commit()
+            
+            # set albumid as -1 in songs
+            songs = Song.query.filter_by(album=album_id).all()
+            for song in songs:
+                song.album = -1
+                db.session.commit()
+
+            if session['type'] == 'creator':
+                return redirect(url_for('creator_albums'))
+            else:                   
+                return redirect(url_for('admin_all_albums'))
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
+    
+@app.route("/album-flag", methods=["POST"])
+def album_flag():
+    if 'user_id' in session:
+        if session['type'] == 'admin':
+            album_id = request.form.get('album_id')
+            album = Album.query.filter_by(id=album_id).first()
+
+            print(album.name)
+
+            if album:
+                album.flagged = 1
+                db.session.commit()
+            
+
+            return redirect(url_for('admin_all_albums'))
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
+    
+@app.route("/song-delete", methods=["POST"])
+def song_delete():
+    if 'user_id' in session:
+        if session['type'] == 'admin' or session['type'] == 'creator':
+            song_id = request.form.get('song_id')
+            song = Song.query.filter_by(id=song_id).first()
+
+            print(song.name)
+            
+            if song:
+                db.session.delete(song)
+                db.session.commit()
+            if session['type'] == 'creator':
+                return redirect(url_for('creator_songs'))
+            else:
+                return redirect(url_for('admin_all_tracks'))
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
+    
+@app.route("/song-flag", methods=["POST"])
+def song_flag():
+    if 'user_id' in session:
+        if session['type'] == 'admin':
+            song_id = request.form.get('song_id')
+            song = Album.query.filter_by(id=song_id).first()
+
+            print(song.name)
+
+            if song:
+                song.flagged = 1
+                db.session.commit()
+
+            return redirect(url_for('admin_all_albums'))
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))

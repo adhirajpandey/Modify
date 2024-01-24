@@ -34,7 +34,30 @@
                 <div>
                     <a href="/album-details/{{ album.id }}" class="btn btn-dark ms-3">View Album</a>
                     <a href="/album-edit/{{ album.id }}" class="btn btn-dark ms-3">Edit</a>
-                    <a href="/album-delete/{{ album.id }}" class="btn btn-danger ms-3">Delete</a>
+                    <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#DeleteModal{{ album.id }}">Delete</button>
+                </div>
+                <div class="modal fade" tabindex="-1" id="DeleteModal{{ album.id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Confirmation message -->
+                                <p>Are you sure you want to delete {{ album.name }} ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Cancel button -->
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit button to confirm removal -->
+                                <form method="POST" action="/album-delete">
+                                    <input type="hidden" name="album_id" value="{{ album.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
