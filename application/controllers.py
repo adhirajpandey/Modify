@@ -308,6 +308,9 @@ def song_edit(song_id):
             new_duration = request.form.get('duration')
             new_album = request.form.get('album')
 
+            if new_album == "none":
+                new_album = -1
+
             song_details.name = new_title
             song_details.artist = new_artist
             song_details.release_date = new_release_date
@@ -320,7 +323,12 @@ def song_edit(song_id):
             message = "Song Edited Successfully, redirecting to Creator Dashboard"
             return render_template("song_edit.html", song_details=song_details, message=message)
         else:
-            return render_template("song_edit.html", song_details=song_details)
+            if song_details.album != -1:
+                current_album_name = Album.query.filter_by(id=song_details.album).first().name
+            else:
+                current_album_name = "None"
+            creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
+            return render_template("song_edit.html", song_details=song_details, creator_albums=creator_albums, current_album_name=current_album_name)
     else:
         return redirect(url_for('user_login'))
     

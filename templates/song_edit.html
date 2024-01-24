@@ -56,11 +56,11 @@
             </div>
             <div class="form-group" style="margin-bottom: 10px;">
                 <label for="album"><strong>Album</strong></label>
-                <select class="form-select" name="album" value="{{ song_details.album}}">
+                <select class="form-select" name="album">
                     <option value="none">None</option>
-                    {% if albums %}
-                        {% for album in albums %}
-                            <option value="{{ album['id'] }}">{{ album['name'] }}</option>
+                    {% if creator_albums %}
+                        {% for album in creator_albums %}
+                            <option value="{{ album['id'] }}" {% if album['name'] == current_album_name %}selected{% endif %}>{{ album['name'] }}</option>
                         {% endfor %}
                     {% endif %}
                 </select>
