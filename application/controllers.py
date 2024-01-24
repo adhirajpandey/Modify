@@ -56,8 +56,23 @@ def logout():
     session.pop('type', None)
     return redirect(url_for('index'))
 
-@app.route("/admin-login", methods = ["GET"])
+@app.route("/admin-login", methods = ["GET", "POST"])
 def admin_login():
+    if request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if services.input_validation(username, password):
+            user = User.query.filter_by(username=username, password=password, type="admin").first()
+            if user:
+                session['username'] = username
+                session['type'] = user.type
+                session['user_id'] = user.id
+                return redirect(url_for('admin_dashboard'))
+            else:
+                error_message = "Invalid username or password"
+                return render_template("admin_login.html", error=error_message)
+        
     return render_template("admin_login.html")
 
 @app.route("/user-home", methods = ["GET"])
@@ -152,7 +167,7 @@ def song_upload():
             album = request.form.get('album')
 
             if album == "none":
-                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, release_date=release_date, user_id=session['user_id'])
+                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=-1, release_date=release_date, user_id=session['user_id'])
             else:
                 song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date, user_id=session['user_id'])
             db.session.add(song)
@@ -199,15 +214,82 @@ def creator_dashboard():
 
 @app.route("/admin-dashboard", methods = ["GET"])
 def admin_dashboard():
-    return render_template("admin_dashboard.html")
+    if session.get("user_id"):
+        if session['type'] == 'admin':
+            creator_accounts = User.query.filter_by(type='creator').all()
+            creator_accounts_count = len(creator_accounts)
+
+            general_accounts = User.query.filter_by(type='general').all()
+            general_accounts_count = len(general_accounts)
+
+            all_songs = Song.query.all()
+            all_songs_count = len(all_songs)
+
+            all_albums = Album.query.all()
+            all_albums_count = len(all_albums)
+
+            all_genres = Album.query.with_entities(Album.genre).distinct().all()
+            all_genres_count = len(all_genres)
+            
+            return render_template("admin_dashboard.html",
+                                    creator_accounts_count=creator_accounts_count, 
+                                    general_accounts_count=general_accounts_count,
+                                    all_songs_count=all_songs_count,
+                                    all_albums_count=all_albums_count,
+                                    all_genres_count=all_genres_count
+                                )
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
 
 @app.route("/admin-all-tracks", methods = ["GET"])
 def admin_all_tracks():
-    return render_template("admin_all_tracks.html")
+    if session.get("user_id"):
+        if session['type'] == 'admin':
+            # get those album ids from song table which are not null
+            all_album_ids = Song.query.with_entities(Song.album).distinct().all()
+            all_albums = {}
+            
+            for album in all_album_ids:
+                if album[0] != -1:
+                    album = Album.query.filter_by(id=album[0]).first()
+                    all_albums[album.id] = album.name
+
+            all_tracks = {}
+            
+            for album in all_album_ids:
+                tracks = Song.query.filter_by(album=album[0]).all()
+                all_tracks[all_albums.get(album[0])] = tracks            
+
+            return render_template("admin_all_tracks.html",
+                                    all_tracks=all_tracks
+                                )
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
 
 @app.route("/admin-all-albums", methods = ["GET"])
 def admin_all_albums():
-    return render_template("admin_all_albums.html")
+    if session.get("user_id"):
+        if session['type'] == 'admin':
+            # get all albums categorised in genres
+            all_genres = Album.query.with_entities(Album.genre).distinct().all()
+            all_albums = {}
+            for genre in all_genres:
+                albums = Album.query.filter_by(genre=genre[0]).all()
+                all_albums[genre[0]] = albums            
+
+            print(all_albums)
+
+            return render_template("admin_all_albums.html",
+                                    all_albums=all_albums
+                                )
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))
 
 @app.route("/song-edit/<int:song_id>", methods = ["GET", "POST"])
 def song_edit(song_id):
@@ -245,7 +327,6 @@ def profile():
             name = request.form.get('name')
             email = request.form.get('email')
 
-            print(name, email)
 
             profile_details.name = name
             profile_details.email = email
@@ -294,11 +375,12 @@ def creator_albums():
     
 @app.route("/album-details/<int:album_id>", methods = ["GET", "POST"])
 def album_details(album_id):
-    if 'user_id' in session and session['type'] == 'creator':
-        album = Album.query.filter_by(id=album_id).first()
-        songs = Song.query.filter_by(album=album_id).all()
+    if 'user_id' in session:
+        if session['type'] == 'creator' or session['type'] == 'admin':
+            album = Album.query.filter_by(id=album_id).first()
+            songs = Song.query.filter_by(album=album_id).all()
 
-        return render_template("album_details.html",album=album, songs=songs)
+            return render_template("album_details.html",album=album, songs=songs)
     else:
         return redirect(url_for('user_login'))
     
@@ -360,7 +442,7 @@ def album_edit(album_id):
     
 @app.route("/playlist-create", methods = ["GET", "POST"])
 def playlist_create():
-    if 'user_id' in session and session['type'] == 'creator':
+    if 'user_id' in session:
         if request.method == "POST":
             name = request.form.get('name')
             description = request.form.get('descriptiont')
@@ -427,7 +509,7 @@ def playlist_details(playlist_id):
     else:
         return redirect(url_for('user_login'))
     
-@app.route("/playlist-remove/", methods=["POST"])
+@app.route("/playlist-remove", methods=["POST"])
 def playlist_remove():
     if 'user_id' in session:
         song_id = request.form.get('song_id')
@@ -457,22 +539,20 @@ def search_results():
     if 'user_id' in session:
         if request.method == "GET":
             search_query = request.args.get('query')
-            print(search_query)
-            search_results = Song.query.filter(Song.name.like("%"+search_query+"%")).all()
+            search_results = Song.query.filter(Song.name.like("%" + search_query + "%")).all()
             return render_template("search_results.html", search_results=search_results)
         else:
             return render_template("search_results.html")
     else:
         return redirect(url_for('user_login'))
     
-@app.route("/song-rating/", methods=["POST"])
+@app.route("/song-rating", methods=["POST"])
 def song_rating():
     if 'user_id' in session:
         song_id = request.form.get('song_id')
         rating = request.form.get('rating')
         user_id = session['user_id']
 
-        # check if rating already exists
         rating_song = RatingSong.query.filter_by(song_id=song_id, user_id=user_id).first()
 
         if not rating_song:

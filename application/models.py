@@ -17,6 +17,7 @@ class Song(db.Model):
     album = db.Column(db.Integer, db.ForeignKey('album.id', name='fk_song_album'), nullable=True)
     release_date = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_song_user'), nullable=False)
+    flagged = db.Column(db.Integer, nullable=False, default=0)
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -24,6 +25,7 @@ class Album(db.Model):
     artist = db.Column(db.String(120), nullable=False)
     genre = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_album_user'), nullable=False)
+    flagged = db.Column(db.Integer, nullable=False, default=0)
 
 class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

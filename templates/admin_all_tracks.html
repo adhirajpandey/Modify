@@ -3,12 +3,16 @@
 {% block navbar %}
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="d-flex mx-auto">
+        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/creator-home' %} active {% endif %}" href="/creator-account" style="margin-right: 10px;">Creator Mode</a>
+            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums" style="margin-right: 10px;">Albums</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/profile' %} active {% endif %}" href="/profile" style="margin-right: 10px;">Profile</a>
+            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks" style="margin-right: 10px;">Tracks</a>
         </li>
     </ul>
     <div class="d-flex">
@@ -25,85 +29,30 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1>All Tracks</h1>
         <form class="d-flex">
-            <input class="form-control me-2 text-center" type="search" placeholder="Search Songs" aria-label="Search" style="width: 200px;">
+            <input class="form-control me-2 text-center" type="search" placeholder="Search Tracks" aria-label="Search" style="width: 200px;">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
     </div>
 <br>
 
+{% for album in all_tracks %}
 <div class="container-sm border border-dark" style="padding:20px; border-radius: 10px;" >
     <div class="d-flex justify-content-between align-items-center">
-        <h2>Genre 1</h2>
-        <a href="#" class="btn btn-dark">See More</a>
+        <h2>{{ album }}</h2>
     </div>
+    {% for song in all_tracks[album] %}
     <div class="card" style="margin-left: 25px; margin-right: 25px; margin-top: 10px;">
         <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 1</h5>
+            <h5 class="card-title" style="margin: 0;">{{ song.name }}</h5>
             <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
+                <a href="/song-flag/{{ song.id }}" class="btn btn-danger ms-3">Flag</a>
+                <a href="/song-delete/{{ song.id }}" class="btn btn-danger ms-3">Delete</a>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="card" style="margin-left: 25px; margin-right: 25px;">
-        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 2</h5>
-            <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="card" style="margin-left: 25px; margin-right: 25px;">
-        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 3</h5>
-            <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
-            </div>
-        </div>
-    </div>
+    </div>  
+    {% endfor %}
 </div>
-
 <br>
+{% endfor %}
 
-<div class="container-sm border border-dark" style="padding:20px; border-radius: 10px;" >
-    <div class="d-flex justify-content-between align-items-center">
-        <h2>Genre 2</h2>
-        <a href="#" class="btn btn-dark">See More</a>
-    </div>
-    <div class="card" style="margin-left: 25px; margin-right: 25px; margin-top: 10px;">
-        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 1</h5>
-            <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="card" style="margin-left: 25px; margin-right: 25px;">
-        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 2</h5>
-            <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div class="card" style="margin-left: 25px; margin-right: 25px;">
-        <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
-            <h5 class="card-title" style="margin: 0;">Song Name 3</h5>
-            <div>
-                <a href="#" class="btn btn-dark ms-3">View Lyrics</a>
-                <a href="#" class="btn btn-danger ms-3">Flag/Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
 {% endblock content %}
