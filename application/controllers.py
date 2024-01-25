@@ -89,9 +89,16 @@ def admin_login():
 def user_home():
     if 'user_id' in session:
         if session['type'] != 'admin':
-            RATING_LIMIT = 3
-            # recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
-            recommended_tracks = Song.query.limit(10).all()
+            all_songs = Song.query.all()
+            all_songs_ids = [song.id for song in all_songs]
+
+            average_ratings = services.fetch_songs_average_ratings(all_songs_ids)
+            recommended_tracks_ids = sorted(average_ratings, key=average_ratings.get, reverse=True)[:10]
+
+            recommended_tracks = []
+            for id in recommended_tracks_ids:
+                recommended_tracks.append(Song.query.filter_by(id=id).first())
+
             user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
             featured_album_id = 2
             featured_album = Album.query.filter_by(id=featured_album_id).first()
@@ -179,9 +186,16 @@ def playlist_remove():
 @app.route("/recommended-tracks", methods=["GET"])
 def recommended_tracks():
     if 'user_id' in session:
-        # RATING_LIMIT = 3
-        # fetch any 10 songs
-        recommended_tracks = Song.query.limit(10).all()
+        all_songs = Song.query.all()
+        all_songs_ids = [song.id for song in all_songs]
+
+        average_ratings = services.fetch_songs_average_ratings(all_songs_ids)
+        recommended_tracks_ids = sorted(average_ratings, key=average_ratings.get, reverse=True)[:20]
+
+        recommended_tracks = []
+        for id in recommended_tracks_ids:
+            recommended_tracks.append(Song.query.filter_by(id=id).first())
+
         return render_template("recommended_tracks.html", recommended_tracks=recommended_tracks)
     else:
         return redirect(url_for('user_login'))
@@ -244,20 +258,11 @@ def song_upload():
 @app.route("/song-details/<int:song_id>", methods=["GET"])
 def song_details(song_id):
     if 'user_id' in session:
-        song = Song.query.get(song_id)
+        song = Song.query.filter_by(id=song_id).first()
+        song_rating = services.fetch_song_average_rating(song_id)
 
-        rating_song = RatingSong.query.filter_by(song_id=song_id).all()
-        song_rating = 0
-        rating_sum = 0
-        for rating in rating_song:
-            rating_sum += rating.rating
-        if len(rating_song) > 0:
-            song_rating = round(rating_sum / len(rating_song), 1)
-        else:
-            song_rating = 0
-
-        DEFAULT_RATING = 3
-        user_song_rating = DEFAULT_RATING
+        DEFAULT_USER_RATING = 3
+        user_song_rating = DEFAULT_USER_RATING
         user_song_rating = RatingSong.query.filter_by(song_id=song_id, user_id=session['user_id']).first()
         if user_song_rating:
             user_song_rating = user_song_rating.rating
@@ -279,7 +284,7 @@ def song_details(song_id):
         if song:
             return render_template("song_details.html", song=song, song_liked=liked, all_playlists=playlist_without_song, user_song_rating=user_song_rating, song_rating=song_rating)
         else:
-            return render_template("index.html")
+            return redirect(url_for('user_home'))
     else:
         return redirect(url_for('user_login'))
 
