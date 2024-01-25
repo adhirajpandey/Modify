@@ -43,7 +43,7 @@
         {% for song in recommended_tracks %}
             <div class="col ms-2 mt-3">
                 <div class="card" style="width: 14rem; margin-bottom: 10px;">
-                    <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="/static/images/cat.jpg" alt="Card image cap">
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ song.name }}</h5>
                         <a href="/song-details/{{ song.id }}" class="btn btn-primary">Read Lyrics</a>
@@ -65,7 +65,7 @@
     <div class="d-flex flex-nowrap overflow-auto">
         {% for playlist in user_playlists %}
         <div class="card col-3 ms-2 mt-3" style="min-width: 14rem; max-width: 14rem;">
-            <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
+            <img class="card-img-top" src="/static/images/cat.jpg" alt="Card image cap">
             <div class="card-body text-center">
                 <h5 class="card-title">{{ playlist.name }}</h5>
                 <a href="playlist-details/{{ playlist.id }}" class="btn btn-primary">View Tracks</a>
@@ -85,7 +85,7 @@
     <div class="d-flex flex-nowrap overflow-auto">
         {% for song in featured_album_songs %}
         <div class="card col-3 ms-2 mt-3" style="min-width: 14rem; max-width: 14rem;">
-            <img class="card-img-top" src="/static/cat.jpg" alt="Card image cap">
+            <img class="card-img-top" src="/static/images/cat.jpg" alt="Card image cap">
             <div class="card-body text-center">
                 <h5 class="card-title">{{ song.name }}</h5>
                 <a href="song-details/{{ song.id }}" class="btn btn-primary">View Lyrics</a>
