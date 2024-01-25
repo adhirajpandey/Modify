@@ -2,7 +2,10 @@ from flask import current_app as app, render_template, request, redirect, url_fo
 from application.models import User, Song, Album, Playlist, PlaylistSong, RatingSong
 from application.database import db
 import application.utils as utils
+import matplotlib.pyplot as plt
+import matplotlib
 
+matplotlib.use('Agg')
 
 # Primary Routes
 @app.route("/", methods = ["GET"])
@@ -714,6 +717,7 @@ def admin_more_analytics():
     if 'user_id' in session:
         if session['type'] == 'admin':
             if request.method == "GET":
+                utils.create_charts()
                 return render_template("admin_more_analytics.html")
             else:
                 return render_template("admin_more_analytics.html")
@@ -721,3 +725,4 @@ def admin_more_analytics():
             return redirect(url_for('user_home'))
     else:
         return redirect(url_for('admin_login'))
+    
