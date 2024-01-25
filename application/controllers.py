@@ -259,6 +259,7 @@ def song_upload():
 def song_details(song_id):
     if 'user_id' in session:
         song = Song.query.filter_by(id=song_id).first()
+        song_album=Album.query.filter_by(id=song.album).first()
         song_rating = utils.fetch_song_average_rating(song_id)
 
         DEFAULT_USER_RATING = 3
@@ -282,7 +283,14 @@ def song_details(song_id):
         else:
             liked = False
         if song:
-            return render_template("song_details.html", song=song, song_liked=liked, all_playlists=playlist_without_song, user_song_rating=user_song_rating, song_rating=song_rating)
+            return render_template("song_details.html",
+                                    song=song,
+                                    song_liked=liked, 
+                                    all_playlists=playlist_without_song, 
+                                    user_song_rating=user_song_rating, 
+                                    song_rating=song_rating,
+                                    song_album=song_album
+                                    )
         else:
             return redirect(url_for('user_home'))
     else:
