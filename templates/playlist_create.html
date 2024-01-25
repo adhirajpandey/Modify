@@ -30,7 +30,7 @@
 {% block content %}
 
 {% if message %}
-<div class="container-sm" style="width: 900px;">
+<div class="container-sm" style="width: 850px;">
     <div class="alert alert-success" role="alert">
         {{ message }}
     </div>
@@ -50,10 +50,6 @@
                 <label for="description"><strong>Description</strong></label>
                 <input type="text" class="form-control" id="description" name="description" placeholder="Enter description" style="width: 800px;" required>
             </div>
-            <div class="form-group" style="margin-bottom: 10px;">
-                <label for="genre"><strong>Genre</strong></label>
-                <input type="text" class="form-control" id="genre" name="genre" placeholder="Enter genre" style="width: 800px;" required>
-            </div>
             <br>
             <div style="text-align: center;">
                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
@@ -63,13 +59,13 @@
 </div>
 
 <script>
-    // Function to redirect after a 2 sec delay
+    // Function to redirect after a 3 sec delay
     function redirectToAnotherPage() {
         var message = "{{ message }}"
         if (message) {
             setTimeout(function() {
-            window.location.href = "/creator-home";
-        }, 5000);
+            window.location.href = "/user-home";
+        }, 3000);
         }
     }
     window.onload = redirectToAnotherPage;

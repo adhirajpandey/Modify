@@ -29,7 +29,7 @@
 {% block content %}
 
 {% if message %}
-<div class="container-sm" style="width: 900px;">
+<div class="container-sm" style="width: 850px;">
     <div class="alert alert-success" role="alert">
         {{ message }}
     </div>
@@ -68,7 +68,7 @@
         if (message) {
             setTimeout(function() {
             window.location.href = "/creator-home";
-        }, 5000);
+        }, 3000);
         }
     }
     window.onload = redirectToAnotherPage;

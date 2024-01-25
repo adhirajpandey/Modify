@@ -114,13 +114,12 @@ def profile():
             name = request.form.get('name')
             email = request.form.get('email')
 
-
             profile_details.name = name
             profile_details.email = email
             
             db.session.commit()
 
-            message = "Profile Edited Successfully, redirecting to Creator Dashboard"
+            message = "Profile Updated Successfully!! Now, redirecting to home page."
             return render_template("profile.html", profile_details=profile_details, message=message)
         else:
             return render_template("profile.html", profile_details=profile_details)
@@ -133,13 +132,12 @@ def playlist_create():
         if request.method == "POST":
             name = request.form.get('name')
             description = request.form.get('descriptiont')
-            genre = request.form.get('genre')
 
             playlist = Playlist(name=name, description=description, user_id=session['user_id'])
             db.session.add(playlist)
             db.session.commit()
 
-            message = "Album Created Successfully, redirecting to Creator Dashboard"
+            message = "Playlist Created Successfully!! Now, redirecting to home."
             return render_template("playlist_create.html", message=message)
         else:
             return render_template("playlist_create.html")
@@ -213,11 +211,12 @@ def user_album_details(album_id):
     else:
         return redirect(url_for('user_login'))
 
+
 # Song Routes
 @app.route("/song-upload", methods = ["GET", "POST"])
 def song_upload():
     if 'user_id' in session and session['type'] == 'creator':
-        albums = Album.query.filter_by(user_id=session['user_id']).all()
+        creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
         if request.method == "POST":
             title = request.form.get('title')
             artist = request.form.get('artist')
@@ -232,10 +231,9 @@ def song_upload():
                 song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date, user_id=session['user_id'])
             db.session.add(song)
             db.session.commit()
-            message = "Song uploaded successfully, redirecting to Creator Home Page"
-            return render_template("song_upload.html", albums=albums, message=message)
+            message = "Song Uploaded Successfully!! Now, redirecting to creator dashboard."
+            return render_template("song_upload.html", creator_albums=creator_albums, message=message)
         else:
-            creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
             return render_template("song_upload.html", creator_albums=creator_albums)
     else:
         return redirect(url_for('user_login'))
@@ -346,7 +344,7 @@ def song_edit(song_id):
             
             db.session.commit()
 
-            message = "Song Edited Successfully, redirecting to Creator Dashboard"
+            message = "Song Edited Successfully!! Now, redirecting to creator dashboard."
             return render_template("song_edit.html", song_details=song_details, message=message, current_album_name=current_album_name)
         else:
             creator_albums = Album.query.filter_by(user_id=session['user_id']).all()
@@ -427,7 +425,8 @@ def creator_account():
             if request.method == "POST":
                 user.type = 'creator'
                 db.session.commit()
-                message = "Your account has been registered as creator account, Now redirecting to creator home page"
+                session['type'] = 'creator'
+                message = "Account Registered as Creator Successfully!! Now, redirecting to creator dashboard."
                 return render_template("creator_register.html", message = message)
             else:
                 return render_template("creator_register.html")
@@ -515,7 +514,7 @@ def album_create():
             db.session.add(album)
             db.session.commit()
 
-            message = "Album Created Successfully, redirecting to Creator Dashboard"
+            message = "Album Created Successfully!! Now, redirecting to creator home."
             return render_template("album_create.html", message=message)
         else:
             return render_template("album_create.html")
@@ -537,7 +536,7 @@ def album_edit(album_id):
             
             db.session.commit()
 
-            message = "Album Edited Successfully, redirecting to Creator Dashboard"
+            message = "Album Edited Successfully!! Now, redirecting to your albums."
             return render_template("album_edit.html", album=album, message=message)
         else:
             return render_template("album_edit.html", album=album)

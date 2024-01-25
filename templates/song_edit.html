@@ -30,7 +30,7 @@
 {% block content %}
 
 {% if message %}
-<div class="container-sm" style="width: 900px;">
+<div class="container-sm" style="width: 850px;">
     <div class="alert alert-success" role="alert">
         {{ message }}
     </div>
@@ -82,13 +82,13 @@
 </div>
 
 <script>
-    // Function to redirect after a 2 sec delay
+    // Function to redirect after a 3 sec delay
     function redirectToAnotherPage() {
         var message = "{{ message }}"
         if (message) {
             setTimeout(function() {
             window.location.href = "/creator-dashboard";
-        }, 5000);
+        }, 3000);
         }
     }
     window.onload = redirectToAnotherPage;
