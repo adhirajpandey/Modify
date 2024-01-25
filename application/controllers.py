@@ -1,7 +1,7 @@
 from flask import current_app as app, render_template, request, redirect, url_for, session
 from application.models import User, Song, Album, Playlist, PlaylistSong, RatingSong
 from application.database import db
-import application.services as services
+import application.utils as utils
 
 
 # Primary Routes
@@ -16,7 +16,7 @@ def user_register():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if services.input_validation(username, password):
+        if utils.input_validation(username, password):
             user = User(username=username, password=password, type='general')
             user_details = User.query.filter_by(username=username).first()
             if user_details:
@@ -38,7 +38,7 @@ def user_login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if services.input_validation(username, password):
+        if utils.input_validation(username, password):
             user = User.query.filter_by(username=username, password=password).first()
             if user:
                 session['username'] = username
@@ -70,7 +70,7 @@ def admin_login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if services.input_validation(username, password):
+        if utils.input_validation(username, password):
             user = User.query.filter_by(username=username, password=password, type="admin").first()
             if user:
                 session['username'] = username
@@ -92,7 +92,7 @@ def user_home():
             all_songs = Song.query.all()
             all_songs_ids = [song.id for song in all_songs]
 
-            average_ratings = services.fetch_songs_average_ratings(all_songs_ids)
+            average_ratings = utils.fetch_songs_average_ratings(all_songs_ids)
             recommended_tracks_ids = sorted(average_ratings, key=average_ratings.get, reverse=True)[:10]
 
             recommended_tracks = []
@@ -189,7 +189,7 @@ def recommended_tracks():
         all_songs = Song.query.all()
         all_songs_ids = [song.id for song in all_songs]
 
-        average_ratings = services.fetch_songs_average_ratings(all_songs_ids)
+        average_ratings = utils.fetch_songs_average_ratings(all_songs_ids)
         recommended_tracks_ids = sorted(average_ratings, key=average_ratings.get, reverse=True)[:20]
 
         recommended_tracks = []
@@ -259,7 +259,7 @@ def song_upload():
 def song_details(song_id):
     if 'user_id' in session:
         song = Song.query.filter_by(id=song_id).first()
-        song_rating = services.fetch_song_average_rating(song_id)
+        song_rating = utils.fetch_song_average_rating(song_id)
 
         DEFAULT_USER_RATING = 3
         user_song_rating = DEFAULT_USER_RATING
