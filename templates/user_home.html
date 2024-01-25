@@ -80,7 +80,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <h2 class="text-start">{{ featured_album.name }}</h2>
-        <a href="/album-details/{{ featured_album_id }}" class="btn btn-secondary">See More</a>
+        <a href="/user-album-details/{{ featured_album_id }}" class="btn btn-secondary">See More</a>
     </div>
     <div class="d-flex flex-nowrap overflow-auto">
         {% for song in featured_album_songs %}

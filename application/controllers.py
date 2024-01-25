@@ -203,6 +203,15 @@ def search_results():
     else:
         return redirect(url_for('user_login'))
     
+@app.route("/user-album-details/<int:album_id>", methods=["GET"])
+def user_album_details(album_id):
+    if 'user_id' in session:
+        album = Album.query.filter_by(id=album_id).first()
+        album_songs = Song.query.filter_by(album=album_id).all()
+
+        return render_template("user_album_details.html", album=album, album_songs=album_songs)
+    else:
+        return redirect(url_for('user_login'))
 
 # Song Routes
 @app.route("/song-upload", methods = ["GET", "POST"])
