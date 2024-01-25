@@ -31,13 +31,11 @@
         <div class="container">
             <div class="row">
                 <div class="container" style="padding: 20px; margin-top: 10px;">
-                    <h1>User Metrics</h1>
-                    <div class="container border border-white" style="padding: 20px; margin-top: 10px;">
-                        <h2 class="text-center">General Accounts</h2>
+                    <h2>User Metrics</h2>
+                    <div class="container border" style="padding: 20px; margin-top: 10px; border-radius: 10px; background-color: rgb(48, 54, 60);">
+                        <h3 class="text-center">General Accounts</h3>
                         <br>
-                        <h3 class="text-center"><strong>{{ general_accounts_count }}</strong></h3>
-                        <br>
-                        <br>
+                        <h2 class="text-center"><strong>{{ general_accounts_count }}</strong></h2>
                         <br>
                         <br>
                     </div>
@@ -45,15 +43,18 @@
             </div>
             <div class="row">
                 <div class="container" style="padding: 20px; margin-top: 10px;">
-                    <div class="container border border-white" style="padding: 20px; margin-top: 10px;">
-                        <h2 class="text-center">Creator Accounts</h2>
+                    <div class="container border" style="padding: 20px; margin-top: 10px; border-radius: 10px; background-color: rgb(48, 54, 60);">
+                        <h3 class="text-center">Creator Accounts</h3>
                         <br>
-                        <h3 class="text-center"><strong>{{ creator_accounts_count }}</strong></h3>
-                        <br>
-                        <br>
+                        <h2 class="text-center"><strong>{{ creator_accounts_count }}</strong></h2>
                         <br>
                         <br>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="margin-top: 0px;" class="text-center">
+                    <a href="/admin-more-analytics"><button class="btn btn-secondary">View More Analytics</button></a>
                 </div>
             </div>
         </div>
@@ -63,33 +64,33 @@
         <div class="container">
             <div class="row">
                 <div class="container" style="padding: 20px; margin-top: 10px;">
-                    <h1>App Performance</h1>
+                    <h2>App Performance</h2>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-4">
-                            <div class="container border border-white">
-                                <h2 class="text-center">Tracks</h2>
+                            <div class="container border" style="border-radius: 10px; background-color: rgb(48, 54, 60);">
+                                <h4 class="text-center mt-3">Tracks</h4>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_songs_count }}</strong></h3>
                                 <br>
-                                <br>
+                               
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="container border border-white">
-                                <h2 class="text-center">Albums</h2>
+                            <div class="container border" style="border-radius: 10px; background-color: rgb(48, 54, 60);">
+                                <h4 class="text-center mt-3">Albums</h4>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_albums_count }}</strong></h3>
                                 <br>
-                                <br>
+                                
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="container border border-white">
-                                <h2 class="text-center">Genres</h2>
+                            <div class="container border" style="border-radius: 10px; background-color: rgb(48, 54, 60);">
+                                <h4 class="text-center mt-3">Genres</h4>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_genres_count }}</strong></h3>
                                 <br>
-                                <br>
+                                
                             </div>
                         </div>
                     </div>
@@ -99,29 +100,26 @@
                 <div class="container" style="padding: 20px; margin-top: 10px;">
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-6">
-                            <div class="container border border-white">
-                                <h2 class="text-center">Image</h2>
+                            <div class="container border" style="border-radius: 10px;">
+                                <h4 class="text-center mt-3">Album Analytics</h4>
                                 <br>
                                 <div class="text-center">
-                                    <img src="/static/images/cat.jpg" class="img-fluid" alt="Responsive image">
+                                    <img src="/static/graphs/1.png" class="img-fluid" alt="Responsive image">
                                 </div>
                                 <br>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="container border border-white">
-                                <h2 class="text-center">Image</h2>
+                            <div class="container border" style="border-radius: 10px; ">
+                                <h4 class="text-center mt-3">Song Analytics</h4>
                                 <br>
                                 <div class="text-center">
-                                    <img src="/static/images/cat.jpg" class="img-fluid" alt="Responsive image">
+                                    <img src="/static/graphs/2.png" class="img-fluid" alt="Responsive image">
                                 </div>
                                 <br>
                             </div>
                         </div>                        
                     </div>
-                    </div>
-                    <div style="margin-top: 20px;" class="text-center">
-                        <button class="btn btn-secondary">View More Analytics</button>
                     </div>
                 </div>
         </div>

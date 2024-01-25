@@ -708,3 +708,16 @@ def admin_search_results():
             return redirect(url_for('user_home'))
     else:
         return redirect(url_for('admin_login'))
+
+@app.route("/admin-more-analytics", methods = ["GET"])
+def admin_more_analytics():
+    if 'user_id' in session:
+        if session['type'] == 'admin':
+            if request.method == "GET":
+                return render_template("admin_more_analytics.html")
+            else:
+                return render_template("admin_more_analytics.html")
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))

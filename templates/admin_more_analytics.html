@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        </li>
+    </ul>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums">Albums</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks">Tracks</a>
+        </li>
+        <li class="nav-item">
+            <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-danger btn-block">Logout</button></a>
+        </li>
+    </ul>
+</div>
+
+{% endblock navbar %}
+
+
+
+{% block content %}
+
+<div class="row" style="margin: 10px; padding: 10px;">
+    <div class="col-6">
+        <div class="container">
+            <div class="row">
+                <div class="container border" style="border-radius: 10px; width: 40vw; height: 40vh; background-color: rgb(48, 54, 60);">
+                    <h4 class="text-center mt-3">Album Analytics</h4>
+                    <div class="text-center">
+                        <img src="/static/graphs/1.png" class="img-fluid" alt="Responsive image" style="width: 400px; height: auto;">
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <br>
+            <div class="row">    
+                <div class="container border" style="border-radius: 10px; width: 40vw; height: 40vh; background-color: rgb(48, 54, 60);">
+                    <h4 class="text-center mt-3">Song Analytics</h4>
+                    <div class="text-center">
+                        <img src="/static/graphs/2.png" class="img-fluid" alt="Responsive image" style="width: 400px; height: auto;">
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="container">
+            <div class="row">
+                <div class="container border" style="border-radius: 10px; width: 40vw; height: 40vh;  background-color: rgb(48, 54, 60);">
+                    <h4 class="text-center mt-3">Album Analytics</h4>
+                    <div class="text-center">
+                        <img src="/static/graphs/3.png" class="img-fluid" alt="Responsive image" style="width: 400px; height: auto;">
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <br>
+            <div class="row">    
+                <div class="container border" style="border-radius: 10px; width: 40vw; height: 40vh;  background-color: rgb(48, 54, 60);">
+                    <h4 class="text-center mt-3">Song Analytics</h4>
+                    <div class="text-center">
+                        <img src="/static/graphs/4.png" class="img-fluid" alt="Responsive image" style="width: 400px; height: auto;">
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
