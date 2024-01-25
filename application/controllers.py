@@ -88,21 +88,24 @@ def admin_login():
 @app.route("/user-home", methods = ["GET"])
 def user_home():
     if 'user_id' in session:
-        RATING_LIMIT = 3
-        # recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
-        recommended_tracks = Song.query.limit(10).all()
-        user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
-        featured_album_id = 2
-        featured_album = Album.query.filter_by(id=featured_album_id).first()
-        featured_album_songs = Song.query.filter_by(album=featured_album_id).limit(10).all()
-        return render_template("user_home.html", 
-                               username=session['username'], 
-                               recommended_tracks=recommended_tracks, 
-                               user_playlists=user_playlists, 
-                               featured_album=featured_album, 
-                               featured_album_songs=featured_album_songs,
-                               featured_album_id=featured_album_id
-                               )
+        if session['type'] != 'admin':
+            RATING_LIMIT = 3
+            # recommended_tracks = Song.query.filter(Song.rating > RATING_LIMIT).limit(10).all()
+            recommended_tracks = Song.query.limit(10).all()
+            user_playlists = Playlist.query.filter(Playlist.user_id==session['user_id']).limit(10).all()
+            featured_album_id = 2
+            featured_album = Album.query.filter_by(id=featured_album_id).first()
+            featured_album_songs = Song.query.filter_by(album=featured_album_id).limit(10).all()
+            return render_template("user_home.html", 
+                                username=session['username'], 
+                                recommended_tracks=recommended_tracks, 
+                                user_playlists=user_playlists, 
+                                featured_album=featured_album, 
+                                featured_album_songs=featured_album_songs,
+                                featured_album_id=featured_album_id
+                                )
+        else:
+            return redirect(url_for('admin_dashboard'))
     else:
         return redirect(url_for('user_login'))
 

@@ -3,20 +3,25 @@
 {% block navbar %}
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums" style="margin-right: 10px;">Albums</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks" style="margin-right: 10px;">Tracks</a>
         </li>
     </ul>
-    <div class="d-flex">
-        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
-    </div>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums">Albums</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks">Tracks</a>
+        </li>
+        <li class="nav-item">
+            <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-danger btn-block">Logout</button></a>
+        </li>
+    </ul>
 </div>
 
 {% endblock navbar %}
+
 
 
 {% block content %}

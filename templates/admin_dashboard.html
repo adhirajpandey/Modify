@@ -3,24 +3,25 @@
 {% block navbar %}
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="d-flex mx-auto">
-        <input class="form-control me-2 text-center" type="search" placeholder="Search Songs/Playlists/Albums" aria-label="Search" style="width: 600px;">
-        <button class="btn btn-success" type="submit">Search</button>
-    </form>
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="margin-right: 15px;">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums" style="margin-right: 10px;">Albums</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks" style="margin-right: 10px;">Tracks</a>
         </li>
     </ul>
-    <div class="d-flex">
-        <a href="/logout" style="color: white; text-decoration: none"><button class="btn btn-danger btn-block">Logout</button></a>
-    </div>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums">Albums</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks">Tracks</a>
+        </li>
+        <li class="nav-item">
+            <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-danger btn-block">Logout</button></a>
+        </li>
+    </ul>
 </div>
 
 {% endblock navbar %}
+
 
 
 {% block content %}
@@ -31,7 +32,7 @@
             <div class="row">
                 <div class="container" style="padding: 20px; margin-top: 10px;">
                     <h1>User Metrics</h1>
-                    <div class="container border border-dark" style="padding: 20px; margin-top: 10px;">
+                    <div class="container border border-white" style="padding: 20px; margin-top: 10px;">
                         <h2 class="text-center">General Accounts</h2>
                         <br>
                         <h3 class="text-center"><strong>{{ general_accounts_count }}</strong></h3>
@@ -44,7 +45,7 @@
             </div>
             <div class="row">
                 <div class="container" style="padding: 20px; margin-top: 10px;">
-                    <div class="container border border-dark" style="padding: 20px; margin-top: 10px;">
+                    <div class="container border border-white" style="padding: 20px; margin-top: 10px;">
                         <h2 class="text-center">Creator Accounts</h2>
                         <br>
                         <h3 class="text-center"><strong>{{ creator_accounts_count }}</strong></h3>
@@ -65,7 +66,7 @@
                     <h1>App Performance</h1>
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-4">
-                            <div class="container border border-dark">
+                            <div class="container border border-white">
                                 <h2 class="text-center">Tracks</h2>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_songs_count }}</strong></h3>
@@ -74,7 +75,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="container border border-dark">
+                            <div class="container border border-white">
                                 <h2 class="text-center">Albums</h2>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_albums_count }}</strong></h3>
@@ -83,7 +84,7 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="container border border-dark">
+                            <div class="container border border-white">
                                 <h2 class="text-center">Genres</h2>
                                 <br>
                                 <h3 class="text-center"><strong>{{ all_genres_count }}</strong></h3>
@@ -98,7 +99,7 @@
                 <div class="container" style="padding: 20px; margin-top: 10px;">
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-6">
-                            <div class="container border border-dark">
+                            <div class="container border border-white">
                                 <h2 class="text-center">Image</h2>
                                 <br>
                                 <div class="text-center">
@@ -108,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="container border border-dark">
+                            <div class="container border border-white">
                                 <h2 class="text-center">Image</h2>
                                 <br>
                                 <div class="text-center">
