@@ -38,11 +38,11 @@
                 <h3 class="card-text">{{ song.artist }} ({{ song.release_date[:4] }})</h3>
                 <h5 class="card-text">{{ song_rating }} out of 5</h5>
                 {% if song_album %}
-                    <a href="/album-details/{{ song_album.id }}"><h5>Album : {{ song_album.name }}</h5></a>
+                    <a href="/user-album-details/{{ song_album.id }}"><h5>Album : {{ song_album.name }}</h5></a>
                 {% endif %}
                 </div>
                 <div class="col-4" style="text-align: right;">
-                    <img src="/static/images/cover.png" style="width: 150px; height:150px; border-radius: 8px; margin-top: 1px;">
+                    <img src="/{{ song.image }}" style="width: 150px; height:150px; border-radius: 8px; margin-top: 1px;">
                 </div>
             </div>  
             <br>

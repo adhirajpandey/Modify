@@ -1,5 +1,6 @@
 from application.models import User, Song, Album, Playlist, PlaylistSong, RatingSong
 from application.database import db
+import os
 
 
 def input_validation(username, password):
@@ -41,3 +42,17 @@ def fetch_songs_average_ratings(song_ids):
             average_ratings[song_id] = sum / len(ratings[song_id])
 
     return average_ratings
+
+
+def get_filename():
+    songs_images_dir = "static/images/songs"
+    filenames = os.listdir(songs_images_dir)
+    filenames = [int(filename[:-4]) for filename in filenames]
+
+    max_num_filename = max(filenames)
+    new_num_filename = max_num_filename + 1
+
+    filename = songs_images_dir + "/" + str(new_num_filename) + ".jpg"
+
+    return filename
+    

@@ -241,11 +241,20 @@ def song_upload():
             lyrics = request.form.get('lyrics')
             duration = request.form.get('duration')
             album = request.form.get('album')
+            file = request.files['file']
+
+            if file:
+                filename = utils.get_filename()
+                file.save(filename)
+            else:
+                filename = "static/images/songs/0.jpg"
 
             if album == "none":
-                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=-1, release_date=release_date, user_id=session['user_id'])
+                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=-1, release_date=release_date, user_id=session['user_id'], image=filename)
             else:
-                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date, user_id=session['user_id'])
+                song = Song(name=title, artist=artist, duration=duration, lyrics=lyrics, album=album, release_date=release_date, user_id=session['user_id'], image=filename)
+            
+            
             db.session.add(song)
             db.session.commit()
             message = "Song Uploaded Successfully!! Now, redirecting to creator dashboard."

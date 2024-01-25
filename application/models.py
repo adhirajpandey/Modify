@@ -18,6 +18,7 @@ class Song(db.Model):
     release_date = db.Column(db.String(120), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_song_user'), nullable=False)
     flagged = db.Column(db.Integer, nullable=False, default=0)
+    image = db.Column(db.String(120), nullable=True)
 
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
