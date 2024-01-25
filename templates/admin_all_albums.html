@@ -29,8 +29,8 @@
 <div class="container-sm " style="padding:20px; border-radius: 10px;">
     <div class="d-flex justify-content-between align-items-center">
         <h1>All Albums</h1>
-        <form class="d-flex">
-            <input class="form-control me-2 text-center" type="search" placeholder="Search Albums" aria-label="Search" style="width: 200px;">
+        <form class="d-flex" action="/admin-search-results" method="GET">
+            <input class="form-control me-2 text-center" type="search" name="query" placeholder="Search Albums" aria-label="Search" style="width: 200px;">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
     </div>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="modal-body">
                             <!-- Confirmation message -->
-                            <p>Are you sure you want to flag this album ?</p>
+                            <p>Are you sure you want to flag {{ album.name }} ?</p>
                         </div>
                         <div class="modal-footer">
                             <!-- Cancel button -->
@@ -83,7 +83,7 @@
                         </div>
                         <div class="modal-body">
                             <!-- Confirmation message -->
-                            <p>Are you sure you want to delete this album ?</p>
+                            <p>Are you sure you want to delete {{ album.name }} ?</p>
                         </div>
                         <div class="modal-footer">
                             <!-- Cancel button -->

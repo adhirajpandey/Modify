@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+        </li>
+    </ul>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-albums' %} active {% endif %}" href="/admin-all-albums">Albums</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path == '/admin-all-tracks' %} active {% endif %}" href="/admin-all-tracks">Tracks</a>
+        </li>
+        <li class="nav-item">
+            <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;"><button class="btn btn-danger btn-block">Logout</button></a>
+        </li>
+    </ul>
+</div>
+
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="container-sm border border-dark" style="margin-bottom:10px; padding:20px; border-radius: 10px;" >
+    <h1>Search Results</h1>
+    
+    <h2>Songs</h2>
+    {% for song in song_search_results %}
+        <div class="card" style="margin-left: 25px; margin-right: 25px; margin-top: 20px;">
+            <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
+                <h5 class="card-title" style="margin: 0;">{{ song.name }}</h5>
+                <div>
+                    <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#FlagModal{{ song.id }}">Flag</button>
+                    <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#DeleteModal{{ song.id }}">Delete</button>
+                </div>
+                <!-- FlagModal -->
+                <div class="modal fade" tabindex="-1" id="FlagModal{{ song.id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Confirmation message -->
+                                <p>Are you sure you want to flag {{ song.name }} ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Cancel button -->
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit button to confirm removal -->
+                                <form method="POST" action="/song-flag">
+                                    <input type="hidden" name="song_id" value="{{ song.id }}">
+                                    <button type="submit" class="btn btn-danger">Flag</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal -->
+                <div class="modal fade" tabindex="-1" id="DeleteModal{{ song.id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Confirmation message -->
+                                <p>Are you sure you want to delete {{ song.name }} ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Cancel button -->
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit button to confirm removal -->
+                                <form method="POST" action="/song-delete">
+                                    <input type="hidden" name="song_id" value="{{ song.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+    <br>
+        
+    <h2>Albums</h2>
+    {% for album in album_search_results %}
+        <div class="card" style="margin-left: 25px; margin-right: 25px; margin-top: 20px;">
+            <div class="card-body d-flex justify-content-between align-items-center" style="margin-left: 25px; margin-right: 25px;">
+                <h5 class="card-title" style="margin: 0;">{{ album.name }}</h5>
+                <div>
+                    <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#FlagModal{{ album.id }}">Flag</button>
+                    <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#DeleteModal{{ album.id }}">Delete</button>
+                </div>
+                <!-- FlagModal -->
+                <div class="modal fade" tabindex="-1" id="FlagModal{{ album.id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Confirmation message -->
+                                <p>Are you sure you want to flag {{ album.name }} ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Cancel button -->
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit button to confirm removal -->
+                                <form method="POST" action="/album-flag">
+                                    <input type="hidden" name="album_id" value="{{ album.id }}">
+                                    <button type="submit" class="btn btn-danger">Flag</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal -->
+                <div class="modal fade" tabindex="-1" id="DeleteModal{{ album.id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Confirmation message -->
+                                <p>Are you sure you want to delete {{ album.name }} ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Cancel button -->
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <!-- Submit button to confirm removal -->
+                                <form method="POST" action="/album-delete">
+                                    <input type="hidden" name="album_id" value="{{ album.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}    
+    <br>
+    
+    <br>
+</div>
+
+{% endblock content %}

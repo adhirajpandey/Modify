@@ -387,8 +387,6 @@ def song_delete():
         if session['type'] == 'admin' or session['type'] == 'creator':
             song_id = request.form.get('song_id')
             song = Song.query.filter_by(id=song_id).first()
-
-            print(song.name)
             
             if song:
                 db.session.delete(song)
@@ -407,15 +405,13 @@ def song_flag():
     if 'user_id' in session:
         if session['type'] == 'admin':
             song_id = request.form.get('song_id')
-            song = Album.query.filter_by(id=song_id).first()
-
-            print(song.name)
+            song = Song.query.filter_by(id=song_id).first()
 
             if song:
                 song.flagged = 1
                 db.session.commit()
 
-            return redirect(url_for('admin_all_albums'))
+            return redirect(url_for('admin_all_tracks'))
         else:
             return redirect(url_for('user_home'))
     else:
@@ -584,8 +580,6 @@ def album_flag():
             album_id = request.form.get('album_id')
             album = Album.query.filter_by(id=album_id).first()
 
-            print(album.name)
-
             if album:
                 album.flagged = 1
                 db.session.commit()
@@ -677,5 +671,23 @@ def admin_all_albums():
     else:
         return redirect(url_for('admin_login'))
     
-
-    
+@app.route("/admin-search-results", methods = ["GET"])
+def admin_search_results():
+    if 'user_id' in session:
+        if session['type'] == 'admin':
+            if request.method == "GET":
+                search_query = request.args.get('query')
+                song_search_results = Song.query.filter(Song.name.like("%" + search_query + "%")).all()
+                album_search_results = Album.query.filter(Album.name.like("%" + search_query + "%")).all()
+                playlist_search_results = Playlist.query.filter(Playlist.name.like("%" + search_query + "%")).all()
+                return render_template("admin_search_results.html",
+                                    song_search_results=song_search_results,
+                                    album_search_results=album_search_results,
+                                    playlist_search_results=playlist_search_results
+                                    )
+            else:
+                return render_template("admin_search_results.html")
+        else:
+            return redirect(url_for('user_home'))
+    else:
+        return redirect(url_for('admin_login'))

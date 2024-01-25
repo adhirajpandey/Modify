@@ -29,8 +29,8 @@
 <div class="container-sm " style="padding:20px; border-radius: 10px;">
     <div class="d-flex justify-content-between align-items-center">
         <h1>All Tracks</h1>
-        <form class="d-flex">
-            <input class="form-control me-2 text-center" type="search" placeholder="Search Tracks" aria-label="Search" style="width: 200px;">
+        <form class="d-flex" action="/admin-search-results" method="GET">
+            <input class="form-control me-2 text-center" type="search" name="query" placeholder="Search Tracks" aria-label="Search" style="width: 200px;">
             <button class="btn btn-success" type="submit">Search</button>
         </form>
     </div>
