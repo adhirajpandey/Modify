@@ -2,7 +2,7 @@
 
 ## Description
 
-Repository for Modern Application Development - 1, college curriculum project.
+Repository for Modern Application Development - 1, IITM BS Course Project.
 
 The application is a multi-user music platform. Users can play music, read lyrics, rate songs, and create playlists.
 Creators contribute by adding new songs, albums, and lyrics, with albums containing multiple songs, and the system showcases the latest or highly-rated content.
@@ -38,4 +38,9 @@ The features of the application are as follows:
 
 ## Demonstration
 
-Youtube Demo Link: https://www.youtube.com/watch?v=OBMKyEXCnwo
+- Youtube Demo Link: https://www.youtube.com/watch?v=OBMKyEXCnwo
+- Index Page Screenshot:
+
+    ![modify_index](https://github.com/adhirajpandey/Modify/assets/87516052/822cab27-7aa2-4292-b3b2-e0e8b7f9ab66)
+
+  
