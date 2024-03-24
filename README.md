@@ -8,7 +8,7 @@ The application is a multi-user music platform. Users can play music, read lyric
 Creators contribute by adding new songs, albums, and lyrics, with albums containing multiple songs, and the system showcases the latest or highly-rated content.
 Admin has functionality to flag or delete songs and albums.
 
-Project Live Deployed Link : https://modify.adhiraj.live
+Project Live Deployed Link : https://modify.adhirajpandey.me/
 
 ## Technologies Used
 
