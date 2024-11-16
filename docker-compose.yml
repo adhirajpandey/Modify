@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: modify
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
